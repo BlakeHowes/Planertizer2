@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class ShipStats : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    public float Health;
+    [SerializeField]
+    private float MaxHealth;
+    [SerializeField]
+    private float RegenSpeed;
+    void OnEnable()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(Health <= MaxHealth)
+        {
+            Health += Time.deltaTime * RegenSpeed/10f;
+        }
+
+        if (Health < 0f)
+        {
+            Destroy(gameObject);
+            GetComponent<ShipAI>().RemoveFromPlanet();
+        }
     }
 }
