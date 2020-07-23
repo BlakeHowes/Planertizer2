@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
+    private Transform target;
     [SerializeField]
-    private GameObject target;
-
-    void Start()
-    {
-
-    }
+    private List<GameObject> SelectedShips = new List<GameObject>();
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
+            foreach (GameObject Ship in SelectedShips)
             {
-                target.transform.position = hit.transform.position;
+                if (Ship.gameObject.tag == "ALLIES")
+                {
+                    target = Ship.transform.GetChild(0);
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        target.transform.position = hit.transform.position;
+                    }
+                }
             }
         }
     }

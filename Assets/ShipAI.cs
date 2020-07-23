@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +27,6 @@ public class ShipAI : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private GameObject target;
-    [SerializeField]
     private float turn;
     private Vector3 UniqueSpin;
     private float distancetotarget;
