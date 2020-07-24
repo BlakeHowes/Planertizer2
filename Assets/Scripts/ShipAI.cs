@@ -18,7 +18,8 @@ public class ShipAI : MonoBehaviour
     private float Damage;
     [SerializeField]
     private string WhatIAttack; //"ENEMY" for allied ships and "ALLIES" for enemys
-
+    [SerializeField]
+    private GameObject ShipMesh;
     /*
     [SerializeField]
     private float persuitRange;
@@ -51,6 +52,18 @@ public class ShipAI : MonoBehaviour
         turn = TurnSpeed;
         UniqueSpin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         AltitudeFromPlanet += (Random.Range(-0.5f, 2f));
+
+        if (WhatIAttack == "ENEMY")
+        {
+            Renderer rend = ShipMesh.GetComponent<Renderer>();
+            rend.material.color = Color.blue;
+        }
+
+        if (WhatIAttack == "ALLIES")
+        {
+            Renderer rend = ShipMesh.GetComponent<Renderer>();
+            rend.material.color = Color.red;
+        }
     }
     void OnTriggerEnter(Collider collider)
     {
@@ -71,6 +84,8 @@ public class ShipAI : MonoBehaviour
                     if (WhatIAttack == "ENEMY")
                     {
                         CurrentPlanet = collider.gameObject;
+
+
                         collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
                     }
 
@@ -132,6 +147,18 @@ public class ShipAI : MonoBehaviour
     public void MoveTarget(Vector3 NewTargetPosition)
     {
         target.transform.position = NewTargetPosition;
+    }
+
+    public void Highlight()
+    {
+        Renderer rend = ShipMesh.GetComponent<Renderer>();
+        rend.material.color = Color.yellow;
+    }
+
+    public void RemoveHighlight()
+    {
+        Renderer rend = ShipMesh.GetComponent<Renderer>();
+        rend.material.color = Color.blue;
     }
 
     private void Update()
