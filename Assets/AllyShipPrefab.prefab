@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8558881987841483378}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AllyShipPrefab
   m_TagString: ALLIES
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 8558881988743609765}
   - component: {fileID: 8558881988743609762}
   - component: {fileID: 8558881988743609763}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship
   m_TagString: ALLIES
   m_Icon: {fileID: 0}
