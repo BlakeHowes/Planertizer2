@@ -6,7 +6,7 @@ public class TargetManager : MonoBehaviour
 {
     private Transform target;
     [SerializeField]
-    private List<GameObject> SelectedShips = new List<GameObject>();
+    public List<GameObject> SelectedShips = new List<GameObject>();
 
     void Update()
     {
