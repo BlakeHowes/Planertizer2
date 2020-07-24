@@ -14,15 +14,13 @@ public class TargetManager : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            foreach (GameObject Ship in SelectedShips)
+            if (Physics.Raycast(ray, out hit))
             {
-                if (Ship.gameObject.tag == "ALLIES")
+                foreach (GameObject Ship in SelectedShips)
                 {
-                    target = Ship.transform.GetChild(0);
-
-                    if (Physics.Raycast(ray, out hit))
+                    if (Ship.gameObject.tag == "ALLIES")
                     {
+                        target = Ship.transform.GetChild(0);
                         target.transform.position = hit.transform.position;
                     }
                 }
