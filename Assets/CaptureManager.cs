@@ -67,20 +67,29 @@ public class CaptureManager : MonoBehaviour
             }
         }
 
+        if((AmICaptured > -1) && (AmICaptured < 0))
+        {
+            Spawning = 0f;
+            SpawnTimer = 0f;
+        }
+
+
+        if ((AmICaptured > 0) && (AmICaptured < 1))
+        {
+            Spawning = 0f;
+            SpawnTimer = 0f;
+        }
+
         if ((AmICaptured != 1) & (AmICaptured >= 0))
         {
             CaptureTimer = 0f;
             Captured = false;
-            Spawning = 0f;
-            SpawnTimer = 0f;
         }
 
         if ((AmICaptured != -1) & (AmICaptured < 0))
         {
             CaptureTimer = 0f;
             Captured = false;
-            Spawning = 0f;
-            SpawnTimer = 0f;
         }
 
         if(Spawning == 1f)

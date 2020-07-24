@@ -10,6 +10,8 @@ public class ShipStats : MonoBehaviour
     private float MaxHealth;
     [SerializeField]
     private float RegenSpeed;
+    [SerializeField]
+    private bool AmIATurret;
     void OnEnable()
     {
         
@@ -25,7 +27,10 @@ public class ShipStats : MonoBehaviour
         if (Health < 0f)
         {
             Destroy(gameObject);
-            GetComponent<ShipAI>().RemoveFromPlanet();
+            if (AmIATurret == false)
+            {
+                GetComponent<ShipAI>().RemoveFromPlanet();
+            }
         }
     }
 }
