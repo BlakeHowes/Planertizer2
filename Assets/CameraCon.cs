@@ -11,10 +11,12 @@ public class CameraCon : MonoBehaviour
     [SerializeField]
     private float ScrollRange;
     private float CameraHeightOnStart;
+    private float CameraSpeedOnStart;
 
     private void Awake()
     {
         CameraHeightOnStart = transform.position.y;
+        CameraSpeedOnStart = CameraSpeed;
     }
 
     void Update()
@@ -30,6 +32,7 @@ public class CameraCon : MonoBehaviour
                  0f,
                  Input.GetAxis("Mouse Y") * CameraSpeed * Time.deltaTime
                 );
+            CameraSpeed = CameraSpeedOnStart * ((transform.position.y)/90f);
             transform.position -= PosChange;
         }
     }
