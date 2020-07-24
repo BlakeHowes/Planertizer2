@@ -29,6 +29,11 @@ public class TargetManager : MonoBehaviour
     }
     public void ClearSelection()
     {
+        foreach (GameObject Ship in SelectedShips)
+        {
+            Ship.GetComponent<ShipAI>().RemoveHighlight();
+        }
+
         SelectedShips.Clear();
     }
 }

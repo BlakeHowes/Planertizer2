@@ -147,6 +147,7 @@ MonoBehaviour:
   OrbitRange: 0.4
   Damage: 1
   WhatIAttack: ALLIES
+  ShipMesh: {fileID: 5606695910494565456}
   target: {fileID: 1701320132973049671}
   EnemysInRange: []
   other: {fileID: 1701320133889645633}
@@ -179,6 +180,7 @@ MonoBehaviour:
   Health: 10
   MaxHealth: 10
   RegenSpeed: 0.1
+  AmIATurret: 0
 --- !u!1 &1701320134130737662
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +302,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d44ba7ed8cfe14685857d3fe37fbee, type: 3}
+--- !u!1 &5606695910494565456 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4534862247417523545}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8905206225914758723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: c7d44ba7ed8cfe14685857d3fe37fbee,

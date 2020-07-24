@@ -103,6 +103,8 @@ public class Drag : MonoBehaviour
         {
             Debug.Log("Hit : " + inBounds[i].name + " at index: " + i);
             gameObject.GetComponent<TargetManager>().SelectedShips.Add(inBounds[i].gameObject);
+            GameObject Ship = (inBounds[i].gameObject);
+            Ship.GetComponent<ShipAI>().Highlight();
             i++;
         }
 
