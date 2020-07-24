@@ -20,8 +20,8 @@ public class TargetManager : MonoBehaviour
                 {
                     if (Ship.gameObject.tag == "ALLIES")
                     {
-                        target = Ship.transform.GetChild(0);
-                        target.transform.position = hit.transform.position;
+                        Vector3 NewTargetPosition = hit.transform.position;
+                        Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition);
                     }
                 }
             }

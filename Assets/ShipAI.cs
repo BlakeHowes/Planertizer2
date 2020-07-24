@@ -58,7 +58,10 @@ public class ShipAI : MonoBehaviour
         {
             if (collider.tag == (WhatIAttack))
             {
-                EnemysInRange.Add(collider.attachedRigidbody.gameObject);
+                if (EnemysInRange.Count > 0f)
+                {
+                    EnemysInRange.Add(collider.attachedRigidbody.gameObject);
+                }
             }
 
             if (collider.tag == ("PLANET"))
@@ -88,9 +91,12 @@ public class ShipAI : MonoBehaviour
     {
         if (collider.tag == (WhatIAttack))
         {
-            EnemysInRange.Remove(collider.attachedRigidbody.gameObject);
-        }
+            if (EnemysInRange.Count > 0)
+            {
+                EnemysInRange.Remove(collider.attachedRigidbody.gameObject);
+            }
 
+        }
         if (collider.tag == ("PLANET"))
         {
             CurrentPlanet = null;
@@ -121,6 +127,11 @@ public class ShipAI : MonoBehaviour
         {
             CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction += 1f;
         }
+    }
+
+    public void MoveTarget(Vector3 NewTargetPosition)
+    {
+        target.transform.position = NewTargetPosition;
     }
 
     private void Update()
