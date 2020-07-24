@@ -58,7 +58,7 @@ public class ShipAI : MonoBehaviour
         {
             if (collider.tag == (WhatIAttack))
             {
-                if (EnemysInRange.Count > 0f)
+                if (collider != null)
                 {
                     EnemysInRange.Add(collider.attachedRigidbody.gameObject);
                 }

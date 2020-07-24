@@ -31,7 +31,8 @@ public class Drag : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            gameObject.GetComponent<TargetManager>().ClearSelection();
+            gameObject.GetComponent<TargetManager>().ClearSelection(); //Selection clear, its kinda buggy, might need rework
+
             screenPos1 = Input.mousePosition;
             dragPos1 = ScreenCast(screenPos1);
             dragPos2 = dragPos1;
