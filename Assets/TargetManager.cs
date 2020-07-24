@@ -27,4 +27,8 @@ public class TargetManager : MonoBehaviour
             }
         }
     }
+    public void ClearSelection()
+    {
+        SelectedShips.Clear();
+    }
 }

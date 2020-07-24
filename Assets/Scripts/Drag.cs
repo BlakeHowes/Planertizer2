@@ -31,13 +31,13 @@ public class Drag : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            gameObject.GetComponent<TargetManager>().ClearSelection();
             screenPos1 = Input.mousePosition;
             dragPos1 = ScreenCast(screenPos1);
             dragPos2 = dragPos1;
 
             uiBox.rectTransform.position = bottomLeft;
             uiBox.enabled = true;
-
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
