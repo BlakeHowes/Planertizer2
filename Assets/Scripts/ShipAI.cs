@@ -28,6 +28,8 @@ public class ShipAI : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private GameObject target;
+    [SerializeField]
+    private LineRenderer Gun;
     private float turn;
     private Vector3 UniqueSpin;
     private float distancetotarget;
@@ -38,7 +40,8 @@ public class ShipAI : MonoBehaviour
     private GameObject nearestEnemy;
     private bool IsRegistered;
     private GameObject CurrentPlanet;
-
+    [SerializeField]
+    private GameObject gunstartpos;
 
     public State state = State.ORBITING;
     public enum State
@@ -53,6 +56,9 @@ public class ShipAI : MonoBehaviour
         turn = TurnSpeed;
         UniqueSpin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         AltitudeFromPlanet += (Random.Range(-0.5f, 2f));
+
+        Gun.SetPosition(0, transform.position);
+        Gun.SetPosition(1, transform.position);
 
         if (WhatIAttack == "ENEMY")
         {
@@ -205,7 +211,8 @@ public class ShipAI : MonoBehaviour
             }
             if (EnemysInRange.Count > 0)
             {
-                Debug.DrawLine(transform.position, nearestEnemy.transform.position, Color.red);
+                Gun.SetPosition(0, gunstartpos.transform.position);
+                Gun.SetPosition(1, nearestEnemy.transform.position);
                 Ship.GetComponent<ShipStats>().Health -= Time.deltaTime * Damage;
                 
             }
@@ -213,6 +220,12 @@ public class ShipAI : MonoBehaviour
         foreach (GameObject Ship in ShipsToRemove)
         {
             EnemysInRange.Remove(Ship);
+        }
+
+        if (EnemysInRange.Count == 0)
+        {
+            Gun.SetPosition(0, transform.position);
+            Gun.SetPosition(1, transform.position);
         }
     }
 
