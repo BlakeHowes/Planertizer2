@@ -12,6 +12,8 @@ public class CameraCon : MonoBehaviour
     private float ScrollRange;
     private float CameraHeightOnStart;
     private float CameraSpeedOnStart;
+    [SerializeField]
+    private Camera OrthographicCamera;
 
     private void Awake()
     {
@@ -21,8 +23,8 @@ public class CameraCon : MonoBehaviour
 
     void Update()
     {
-        Vector3 Scroll = new Vector3(0f, Input.GetAxis("Mouse ScrollWheel") * ScrollSpeed * Time.deltaTime, 0f);
-        transform.position -= Scroll;
+        float Scroll = (Input.GetAxis("Mouse ScrollWheel") * ScrollSpeed * Time.deltaTime);
+        OrthographicCamera.orthographicSize -= Scroll;
 
         if (Input.GetMouseButton(2))
         {
@@ -32,7 +34,7 @@ public class CameraCon : MonoBehaviour
                  0f,
                  Input.GetAxis("Mouse Y") * CameraSpeed * Time.deltaTime
                 );
-            CameraSpeed = CameraSpeedOnStart * ((transform.position.y)/90f);
+            CameraSpeed = CameraSpeedOnStart * ((OrthographicCamera.orthographicSize) /120f);
             transform.position -= PosChange;
         }
     }

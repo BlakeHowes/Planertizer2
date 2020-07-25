@@ -131,16 +131,19 @@ public class ShipAI : MonoBehaviour
     }
     public void RemoveFromPlanet()
     {
-        CurrentPlanet.GetComponent<CaptureManager>().TotalShips -= 1f;
-
-        if (WhatIAttack == "ENEMY")
+        if (this != null)
         {
-            CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction -= 1f;
-        }
+            CurrentPlanet.GetComponent<CaptureManager>().TotalShips -= 1f;
 
-        if (WhatIAttack == "ALLIES")
-        {
-            CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction += 1f;
+            if (WhatIAttack == "ENEMY")
+            {
+                CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction -= 1f;
+            }
+
+            if (WhatIAttack == "ALLIES")
+            {
+                CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction += 1f;
+            }
         }
     }
 

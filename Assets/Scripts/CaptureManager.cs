@@ -112,4 +112,54 @@ public class CaptureManager : MonoBehaviour
             }
         }
     }
+
+    //Giving planet info to EnemyAi using a collider
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "ENEMYAI")
+        {
+            if (AmICaptured == -1)
+            {
+                string Type = "Enemy";
+                col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+            }
+
+            if ((AmICaptured > -1) && (AmICaptured < 1))
+            {
+                string Type = "Empty";
+                col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+            }
+
+            if (AmICaptured == 1)
+            {
+                string Type = "Allied";
+                col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.tag == "ENEMYAI")
+        {
+            if (AmICaptured == -1)
+            {
+                string Type = "Enemy";
+                col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+            }
+
+            if ((AmICaptured > -1) && (AmICaptured < 1))
+            {
+                string Type = "Empty";
+                col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+            }
+
+            if (AmICaptured == 1)
+            {
+                string Type = "Allied";
+                col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+            }
+        }
+    }
 }
+

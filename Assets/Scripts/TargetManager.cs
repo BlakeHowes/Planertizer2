@@ -7,8 +7,9 @@ public class TargetManager : MonoBehaviour
     private Transform target;
     [SerializeField]
     public List<GameObject> SelectedShips = new List<GameObject>();
-
+    public List<GameObject> ShipsToRemove = new List<GameObject>();
     void Update()
+
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -18,11 +19,22 @@ public class TargetManager : MonoBehaviour
             {
                 foreach (GameObject Ship in SelectedShips)
                 {
+                    if (Ship == null)
+                    {
+                        ShipsToRemove.Add(Ship);
+                        continue;
+                    }
+
                     if (Ship.gameObject.tag == "ALLIES")
                     {
                         Vector3 NewTargetPosition = hit.transform.position;
                         Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition);
                     }
+                }
+
+                foreach (GameObject Ship in ShipsToRemove)
+                {
+                    SelectedShips.Remove(Ship);
                 }
             }
         }
