@@ -11,7 +11,7 @@ public class CaptureManager : MonoBehaviour
     [SerializeField]
     private float TimeTakenToCapture;
     [SerializeField]
-    private float AmICaptured;
+    public float AmICaptured;
     private bool Captured;
     [SerializeField]
     private float CaptureTimer;
@@ -26,6 +26,9 @@ public class CaptureManager : MonoBehaviour
     private GameObject EnemyShipPrefab;
     [SerializeField]
     private float SpawnTimer;
+    [SerializeField]
+    private bool TellEnemyAIThisIsAEnemyPlanet;
+    private bool TellEnemyAIThisIsAAlliedPlanet;
     void Update()
     {
         CaptureTimer += Time.deltaTime;
@@ -49,6 +52,8 @@ public class CaptureManager : MonoBehaviour
                     planetrenderer.material.color = Color.blue;
                     Captured = true;
                     Spawning = 1f;
+
+                    TellEnemyAIThisIsAAlliedPlanet = true;
                 }
             }
         }
@@ -63,6 +68,8 @@ public class CaptureManager : MonoBehaviour
                     planetrenderer.material.color = Color.red;
                     Captured = true;
                     Spawning = -1f;
+
+                    TellEnemyAIThisIsAEnemyPlanet = true;
                 }
             }
         }
@@ -109,6 +116,34 @@ public class CaptureManager : MonoBehaviour
             {
                 Instantiate(EnemyShipPrefab, Spawnpoint.transform.position, new Quaternion());
                 SpawnTimer = 0f;
+            }
+        }
+
+        if(TellEnemyAIThisIsAEnemyPlanet == true)
+        {
+            string Type = "MyPlanets";
+            GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
+            EnemyAi.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+            TellEnemyAIThisIsAEnemyPlanet = false;
+
+            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmpyPlanetsInRange.Contains(gameObject))
+            {
+                Type = "Empty";
+                EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+            }
+        }
+
+        if (TellEnemyAIThisIsAAlliedPlanet == true)
+        {
+            string Type = "MyPlanets";
+            GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
+            EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+            TellEnemyAIThisIsAAlliedPlanet = false;
+
+            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmpyPlanetsInRange.Contains(gameObject))
+            {
+                Type = "Empty";
+                EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
             }
         }
     }

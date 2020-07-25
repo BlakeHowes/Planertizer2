@@ -258,6 +258,7 @@ MonoBehaviour:
   Damage: 1
   WhatIAttack: ENEMY
   ShipMesh: {fileID: 8558881988587291733}
+  EnemyAi: {fileID: 0}
   target: {fileID: 8558881988616480639}
   EnemysInRange: []
   other: {fileID: 8558881988743609762}
@@ -291,3 +292,4 @@ MonoBehaviour:
   MaxHealth: 10
   RegenSpeed: 0.1
   AmIATurret: 0
+  EnemyAi: {fileID: 9159130915030187310, guid: ae12748c6fa2a4541982443b4c54712b, type: 3}

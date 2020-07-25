@@ -30,6 +30,11 @@ public class ShipStats : MonoBehaviour
             if (AmIATurret == false)
             {
                 GetComponent<ShipAI>().RemoveFromPlanet();
+                GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
+                if (EnemyAi.GetComponent<EnemyAI>().ShipsICanMove.Contains(gameObject))
+                {
+                    EnemyAi.GetComponent<EnemyAI>().RemoveShip(gameObject);
+                }
             }
         }
     }

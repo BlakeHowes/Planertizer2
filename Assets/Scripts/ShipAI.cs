@@ -39,6 +39,7 @@ public class ShipAI : MonoBehaviour
     private bool IsRegistered;
     private GameObject CurrentPlanet;
 
+
     public State state = State.ORBITING;
     public enum State
     {
@@ -84,8 +85,6 @@ public class ShipAI : MonoBehaviour
                     if (WhatIAttack == "ENEMY")
                     {
                         CurrentPlanet = collider.gameObject;
-
-
                         collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
                     }
 
@@ -97,6 +96,15 @@ public class ShipAI : MonoBehaviour
 
                     collider.GetComponent<CaptureManager>().TotalShips += 1f;
                     IsRegistered = true;
+                }
+            }
+
+            if(collider.tag == "ENEMYAI")
+            {
+                if (WhatIAttack == "ALLIES")
+                {
+                    GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
+                    EnemyAi.GetComponent<EnemyAI>().AddShip(gameObject);
                 }
             }
         }
@@ -128,7 +136,17 @@ public class ShipAI : MonoBehaviour
             collider.GetComponent<CaptureManager>().TotalShips -= 1f;
             IsRegistered = false;
         }
+
+        if (collider.tag == "ENEMYAI")
+        {
+            if(WhatIAttack == "ALLIES")
+            {
+                GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
+                EnemyAi.GetComponent<EnemyAI>().RemoveShip(gameObject);
+            }
+        }
     }
+
     public void RemoveFromPlanet()
     {
         if (this != null)

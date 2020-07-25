@@ -92,7 +92,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.43
+  m_Radius: 1.03
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1133928451017753975
 MonoBehaviour:
@@ -118,6 +118,7 @@ MonoBehaviour:
   EnemyShipPrefab: {fileID: 1701320134130737662, guid: 44841fe4a5f94de4fb37d698c69862ba,
     type: 3}
   SpawnTimer: 0
+  TellEnemyAIThisIsAEnemyPlanet: 0
 --- !u!1 &1133928451694133138
 GameObject:
   m_ObjectHideFlags: 0
