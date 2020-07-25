@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ccd7e06f0627f543ae8fb367492f23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxShipNumber: 40
   CaptureFunction: 0
   TotalShips: 0
   TimeTakenToCapture: 3

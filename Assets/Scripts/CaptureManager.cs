@@ -5,6 +5,8 @@ using UnityEngine;
 public class CaptureManager : MonoBehaviour
 {
     [SerializeField]
+    private float MaxShipNumber;
+    [SerializeField]
     public float CaptureFunction;
     [SerializeField]
     public float TotalShips;
@@ -102,20 +104,26 @@ public class CaptureManager : MonoBehaviour
         if(Spawning == 1f)
         {
             SpawnTimer += Time.deltaTime;
-            if (SpawnTimer > SpawnRate)
+            if (TotalShips <= MaxShipNumber)
             {
-                Instantiate(AllyShipPrefab, Spawnpoint.transform.position, new Quaternion());
-                SpawnTimer = 0f;
+                if (SpawnTimer > SpawnRate)
+                {
+                    Instantiate(AllyShipPrefab, Spawnpoint.transform.position, new Quaternion());
+                    SpawnTimer = 0f;
+                }
             }
         }
 
         if (Spawning == -1f)
         {
             SpawnTimer += Time.deltaTime;
-            if (SpawnTimer > SpawnRate)
+            if (TotalShips <= MaxShipNumber)
             {
-                Instantiate(EnemyShipPrefab, Spawnpoint.transform.position, new Quaternion());
-                SpawnTimer = 0f;
+                if (SpawnTimer > SpawnRate)
+                {
+                    Instantiate(EnemyShipPrefab, Spawnpoint.transform.position, new Quaternion());
+                    SpawnTimer = 0f;
+                }
             }
         }
 
