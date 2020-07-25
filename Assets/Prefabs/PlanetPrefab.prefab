@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1133928451017753962}
   - component: {fileID: 1133928451017753963}
   - component: {fileID: 1133928451017753975}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlanetPrefab
   m_TagString: PLANET
   m_Icon: {fileID: 0}

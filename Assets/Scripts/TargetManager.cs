@@ -8,6 +8,8 @@ public class TargetManager : MonoBehaviour
     [SerializeField]
     public List<GameObject> SelectedShips = new List<GameObject>();
     public List<GameObject> ShipsToRemove = new List<GameObject>();
+    [SerializeField]
+    private LayerMask layermask;
     void Update()
     {
         foreach (GameObject Ship in SelectedShips)
@@ -27,15 +29,21 @@ public class TargetManager : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit,Mathf.Infinity,layermask))
             {
-                if (hit.transform.tag == "PLANET")
+                foreach (GameObject Ship in SelectedShips)
                 {
-                    foreach (GameObject Ship in SelectedShips)
+                    if (Ship.gameObject.tag == "ALLIES")
                     {
-                        if (Ship.gameObject.tag == "ALLIES")
+                        if (hit.transform.tag == "PLANET")
                         {
                             Vector3 NewTargetPosition = hit.transform.position;
+                            Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition);
+                        }
+
+                        if (hit.transform.tag == "SPACE")
+                        {
+                            Vector3 NewTargetPosition = hit.point;
                             Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition);
                         }
                     }
