@@ -23,18 +23,21 @@ public class ShipStats : MonoBehaviour
         {
             Health += Time.deltaTime * RegenSpeed/10f;
         }
-
-        if (Health < 0f)
+        if(this != null)
         {
-            Destroy(gameObject);
-            if (AmIATurret == false)
+            if (Health < 0f)
             {
-                GetComponent<ShipAI>().RemoveFromPlanet();
-                GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
-                if (EnemyAi.GetComponent<EnemyAI>().ShipsICanMove.Contains(gameObject))
+                if (AmIATurret == false)
                 {
-                    EnemyAi.GetComponent<EnemyAI>().RemoveShip(gameObject);
+                    GetComponent<ShipAI>().RemoveFromPlanet();
+                    GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
+                    if (EnemyAi.GetComponent<EnemyAI>().ShipsICanMove.Contains(gameObject))
+                    {
+                        EnemyAi.GetComponent<EnemyAI>().RemoveShip(gameObject);
+                    }
                 }
+
+                Destroy(gameObject);
             }
         }
     }

@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField]
+    private int i;
+
+    [SerializeField]
     List<GameObject> TotalEnemyPlanets = new List<GameObject>();
     [SerializeField]
     List<GameObject> EnemyPlanetsInRange = new List<GameObject>();
@@ -15,14 +18,20 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     public List<GameObject> ShipsICanMove = new List<GameObject>();
 
+
     [SerializeField]
     private float AiSpeed; //this will determine the rate at which the AI performs actions
     [SerializeField]
     private int DefensiveFactor;
     [SerializeField]
-    private int NumberOfShipsUsedToColonize;
+    private int PartySize;
+    [SerializeField]
     private float TurnTimer;
     private GameObject CurrentPlanet;
+
+    private bool reset;
+    [SerializeField]
+    GameObject remeberme;
 
     public void AddPlanet(GameObject Planet,string Type)
     {
@@ -82,20 +91,69 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        List<GameObject> ShipsToRemove = new List<GameObject>();
+        foreach (GameObject Ship in ShipsICanMove)
+        {
+            if (Ship == null)
+            {
+                ShipsToRemove.Add(Ship);
+            }
+        }
+
+        foreach (GameObject Ship in ShipsToRemove)
+        {
+            ShipsICanMove.Remove(Ship);
+        }
+
+        ShipsToRemove.Clear();
+
         TurnTimer += Time.deltaTime;
         if (TurnTimer >= AiSpeed)
         {
+            if (i >= TotalEnemyPlanets.Count)
+            {
+                i = 0;
+            }
+
+            if (TotalEnemyPlanets.Count > 0)
+            {
+                transform.position = TotalEnemyPlanets[i].transform.position;
+                
+                if(AlliedPlanetsInRange.Count > 0)
+                {
+                    remeberme = TotalEnemyPlanets[i];
+                }
+
+                if(i < TotalEnemyPlanets.Count)
+                {
+                    i += 1;
+                }
+            }
+
             foreach (GameObject Planet in TotalEnemyPlanets)
             {
-                transform.position = Planet.transform.position;
                 CurrentPlanet = Planet;
+                if(Planet.GetComponent<CaptureManager>().AmICaptured > -1)
+
+                {
+                    DefendPlanet();
+                }
+
                 DecideWhatToDo();
             }
 
             TurnTimer = 0f;
+            reset = true;
+        }
+
+        if (TurnTimer > 0.1f)
+        {
+            if(CurrentPlanet != null)
+            {
+  
+            }
         }
     }
-
     void DecideWhatToDo()
     {
         if (NearbyEmpyPlanetsInRange.Count > 0)
@@ -114,22 +172,37 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void DefendPlanet()
+    {
+        float actioncount = 0f;
+        foreach (GameObject Ship in ShipsICanMove)
+        {
+            if (actioncount < (PartySize + CurrentPlanet.GetComponent<CaptureManager>().TotalShips))
+            {
+                Vector3 MoveTarget = CurrentPlanet.transform.position;
+                Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
+                actioncount += 1;
+            }
+        }
+        resetpos();
+    }
+
     void Colonize()
     {
         if (CurrentPlanet.GetComponent<CaptureManager>().AmICaptured == -1)
         {
             foreach (GameObject Planet in NearbyEmpyPlanetsInRange)
             {
-                if (CurrentPlanet.GetComponent<CaptureManager>().TotalShips > DefensiveFactor)
+                if (CurrentPlanet.GetComponent<CaptureManager>().TotalShips > 1)
                 {
                     if (ShipsICanMove.Count > DefensiveFactor)
                     {
                         float SendShips = 0f;
                         foreach (GameObject Ship in ShipsICanMove)
                         {
-                            if (SendShips < NumberOfShipsUsedToColonize)
+                            if (SendShips < PartySize)
                             {
-                                if (CurrentPlanet.GetComponent<CaptureManager>().TotalShips > DefensiveFactor)
+                                if (CurrentPlanet.GetComponent<CaptureManager>().TotalShips > 1)
                                 {
                                     Vector3 MoveTarget = Planet.transform.position;
                                     Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
@@ -141,15 +214,60 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
+        resetpos();
     }
 
     void Attack()
     {
-
+        foreach (GameObject Planet in AlliedPlanetsInRange)
+        {
+            if (ShipsICanMove.Count > Planet.GetComponent<CaptureManager>().TotalShips)
+            {
+                foreach (GameObject Ship in ShipsICanMove)
+                {
+                    Vector3 MoveTarget = Planet.transform.position;
+                    Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
+                }
+            }
+        }
+        resetpos();
     }
 
     void MoveShipsTowardsAllies()
     {
-        
+        float actioncount = 0f;
+        foreach (GameObject Planet in EnemyPlanetsInRange)
+        {
+
+                foreach (GameObject Ship in ShipsICanMove)
+                {
+                    if (actioncount < (CurrentPlanet.GetComponent<CaptureManager>().TotalShips) - DefensiveFactor)
+                    {
+                    if (remeberme != null)
+                    {
+                        Vector3 MoveTarget = remeberme.transform.position;
+                        Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
+                        actioncount += 1;
+                    }
+                    }
+                }
+                actioncount = 0f;
+                ShipsICanMove.Clear();
+        }
+        resetpos();
+    }
+
+    void resetpos()
+    {
+
+
+        Vector3 resetcolpos = new Vector3(0f, 200f, 0f);
+        transform.position = resetcolpos;
+        EnemyPlanetsInRange.Clear();
+        AlliedPlanetsInRange.Clear();
+        NearbyEmpyPlanetsInRange.Clear();
+        reset = false;
+
     }
 }
+

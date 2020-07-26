@@ -15,6 +15,7 @@ public class CaptureManager : MonoBehaviour
     [SerializeField]
     public float AmICaptured;
     private bool Captured;
+    private bool NoLongerEmpty;
     [SerializeField]
     private float CaptureTimer;
     private float Spawning; //1 = spawn allies, -1 = spawn enemys
@@ -53,6 +54,7 @@ public class CaptureManager : MonoBehaviour
                     var planetrenderer = GetComponent<Renderer>();
                     planetrenderer.material.color = Color.blue;
                     Captured = true;
+                    NoLongerEmpty = true;
                     Spawning = 1f;
 
                     TellEnemyAIThisIsAAlliedPlanet = true;
@@ -69,6 +71,7 @@ public class CaptureManager : MonoBehaviour
                     var planetrenderer = GetComponent<Renderer>();
                     planetrenderer.material.color = Color.red;
                     Captured = true;
+                    NoLongerEmpty = true;
                     Spawning = -1f;
 
                     TellEnemyAIThisIsAEnemyPlanet = true;
@@ -193,8 +196,11 @@ public class CaptureManager : MonoBehaviour
 
             if ((AmICaptured > -1) && (AmICaptured < 1))
             {
-                string Type = "Empty";
-                col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+                if (NoLongerEmpty == false)
+                {
+                    string Type = "Empty";
+                    col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+                }
             }
 
             if (AmICaptured == 1)

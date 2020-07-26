@@ -157,16 +157,19 @@ public class ShipAI : MonoBehaviour
     {
         if (this != null)
         {
-            CurrentPlanet.GetComponent<CaptureManager>().TotalShips -= 1f;
-
-            if (WhatIAttack == "ENEMY")
+            if (CurrentPlanet != null)
             {
-                CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction -= 1f;
-            }
+                CurrentPlanet.GetComponent<CaptureManager>().TotalShips -= 1f;
 
-            if (WhatIAttack == "ALLIES")
-            {
-                CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction += 1f;
+                if (WhatIAttack == "ENEMY")
+                {
+                    CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction -= 1f;
+                }
+
+                if (WhatIAttack == "ALLIES")
+                {
+                    CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction += 1f;
+                }
             }
         }
     }
