@@ -151,6 +151,8 @@ public class EnemyAI : MonoBehaviour
                 {
                     SphereCollider Col = GetComponent<SphereCollider>();
                     Col.radius = Col.radius * 1.1f;
+                    remeberme = null;
+
                 }
             }
 
