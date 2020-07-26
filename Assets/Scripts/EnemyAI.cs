@@ -34,6 +34,7 @@ public class EnemyAI : MonoBehaviour
     GameObject remeberme;
     private int SeekFarWayPlanetsChecker;
     private float radiusonstart;
+    private int ifixed;
 
     private void Awake()
     {
@@ -122,7 +123,7 @@ public class EnemyAI : MonoBehaviour
             {
                 if(i > 0)
                 {
-                    int ifixed = i - 1;
+                    ifixed = i - 1;
                     remeberme = TotalEnemyPlanets[ifixed];
                 }
             }
@@ -281,10 +282,8 @@ public class EnemyAI : MonoBehaviour
                     }
                     }
                 }
-                actioncount = 0f;
                 ShipsICanMove.Clear();
         }
-        resetpos();
     }
 
     void resetpos()
@@ -298,6 +297,10 @@ public class EnemyAI : MonoBehaviour
         NearbyEmpyPlanetsInRange.Clear();
         reset = false;
 
+        if (TurnTimer > 0.1)
+        {
+            transform.position = TotalEnemyPlanets[ifixed].transform.position;
+        }
     }
 }
 
