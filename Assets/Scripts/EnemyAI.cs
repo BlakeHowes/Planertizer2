@@ -88,11 +88,6 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void AddShip(GameObject Ship)
-    {
-        ShipsICanMove.Add(Ship);
-    }
-
     public void RemoveShip(GameObject Ship)
     {
         ShipsICanMove.Remove(Ship);
@@ -124,7 +119,11 @@ public class EnemyAI : MonoBehaviour
                 if(i > 0)
                 {
                     ifixed = i - 1;
-                    remeberme = TotalEnemyPlanets[ifixed];
+                    if (ifixed < TotalEnemyPlanets.Count)
+                    {
+                        remeberme = TotalEnemyPlanets[ifixed];
+                    }
+
                 }
             }
 
@@ -215,7 +214,6 @@ public class EnemyAI : MonoBehaviour
                 actioncount += 1;
             }
         }
-        resetpos();
     }
 
     void Colonize()
@@ -284,6 +282,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 ShipsICanMove.Clear();
         }
+        resetpos();
     }
 
     void resetpos()
@@ -297,10 +296,18 @@ public class EnemyAI : MonoBehaviour
         NearbyEmpyPlanetsInRange.Clear();
         reset = false;
 
-        if (TurnTimer > 0.1)
+        if (TurnTimer > 0.2)
         {
-            transform.position = TotalEnemyPlanets[ifixed].transform.position;
+            if (ifixed < TotalEnemyPlanets.Count)
+            {
+ 
+            }
         }
+    }
+
+    public void AddShip(GameObject Ship)
+    {
+        ShipsICanMove.Add(Ship);
     }
 }
 
