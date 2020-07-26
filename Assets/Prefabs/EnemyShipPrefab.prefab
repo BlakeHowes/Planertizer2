@@ -173,9 +173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6c89df3781bec40874d26073740f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShipSpeed: 7
-  AltitudeFromPlanet: 5
-  TurnSpeed: 0.25
+  ShipSpeed: 3
+  AltitudeFromPlanet: 6
+  TurnSpeed: 0.1
   OrbitRange: 0.4
   Damage: 2
   WhatIAttack: ALLIES
@@ -381,6 +381,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1701320133889645639}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
+        type: 3}
+      propertyPath: m_Name
+      value: Alien ship 2
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -450,11 +455,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 48.6121
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
-        type: 3}
-      propertyPath: m_Name
-      value: Alien ship 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d44ba7ed8cfe14685857d3fe37fbee, type: 3}

@@ -32,6 +32,14 @@ public class EnemyAI : MonoBehaviour
     private bool reset;
     [SerializeField]
     GameObject remeberme;
+    private int SeekFarWayPlanetsChecker;
+    private float radiusonstart;
+
+    private void Awake()
+    {
+        SphereCollider col = GetComponent<SphereCollider>();
+        radiusonstart = col.radius;
+    }
 
     public void AddPlanet(GameObject Planet,string Type)
     {
@@ -110,23 +118,39 @@ public class EnemyAI : MonoBehaviour
         TurnTimer += Time.deltaTime;
         if (TurnTimer >= AiSpeed)
         {
+            if (AlliedPlanetsInRange.Count > 0)
+            {
+                if(i > 0)
+                {
+                    int ifixed = i - 1;
+                    remeberme = TotalEnemyPlanets[ifixed];
+                }
+            }
+
             if (i >= TotalEnemyPlanets.Count)
             {
                 i = 0;
+                SeekFarWayPlanetsChecker = 0;
             }
 
             if (TotalEnemyPlanets.Count > 0)
             {
-                transform.position = TotalEnemyPlanets[i].transform.position;
-                
-                if(AlliedPlanetsInRange.Count > 0)
+                if((NearbyEmpyPlanetsInRange.Count == 0) && (AlliedPlanetsInRange.Count == 0))
                 {
-                    remeberme = TotalEnemyPlanets[i];
+                    SeekFarWayPlanetsChecker += 1;
                 }
+
+                transform.position = TotalEnemyPlanets[i].transform.position;
 
                 if(i < TotalEnemyPlanets.Count)
                 {
                     i += 1;
+                }
+
+                if (SeekFarWayPlanetsChecker == TotalEnemyPlanets.Count)
+                {
+                    SphereCollider Col = GetComponent<SphereCollider>();
+                    Col.radius = Col.radius * 1.1f;
                 }
             }
 
@@ -159,11 +183,15 @@ public class EnemyAI : MonoBehaviour
         if (NearbyEmpyPlanetsInRange.Count > 0)
         {
             Colonize();
+            SphereCollider col = GetComponent<SphereCollider>();
+            col.radius = radiusonstart;
         }
 
         if ((NearbyEmpyPlanetsInRange.Count == 0) && (AlliedPlanetsInRange.Count > 0))
         {
             Attack();
+            SphereCollider col = GetComponent<SphereCollider>();
+            col.radius = radiusonstart;
         }
 
         if((NearbyEmpyPlanetsInRange.Count == 0) && (AlliedPlanetsInRange.Count == 0) && (EnemyPlanetsInRange.Count > 1))
