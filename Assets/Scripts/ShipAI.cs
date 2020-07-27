@@ -62,17 +62,9 @@ public class ShipAI : MonoBehaviour
 
         Gun.enabled = false;
 
-        if (teamManager.currentTeam == 1)
-        {
-            Renderer rend = ShipMesh.GetComponent<Renderer>();
-            rend.material.color = Color.blue;
-        }
+        Renderer rend = ShipMesh.GetComponent<Renderer>();
+        rend.material.color = teamManager.getTeamColor();
 
-        if (teamManager.currentTeam == 2)
-        {
-            Renderer rend = ShipMesh.GetComponent<Renderer>();
-            rend.material.color = Color.red;
-        }
     }
 
 
@@ -83,7 +75,7 @@ public class ShipAI : MonoBehaviour
             EnemysInRange.Add(collider.attachedRigidbody.gameObject);
         }
 
-        if (collider.tag == ("PLANET"))
+        /*if (collider.tag == ("PLANET"))
         {
             if(IsRegistered == false)
             {
@@ -103,7 +95,7 @@ public class ShipAI : MonoBehaviour
                 collider.GetComponent<CaptureManager>().TotalShips += 1f;
                 IsRegistered = true;
             }
-        }
+        }*/
 
         if(collider.tag == "ENEMYAI")
         {
@@ -128,17 +120,17 @@ public class ShipAI : MonoBehaviour
         if (collider.tag == ("PLANET"))
         {
             CurrentPlanet = null;
-            if (WhatIAttack == "ENEMY")
+            if (teamManager.currentTeam == 1)
             {
                 collider.GetComponent<CaptureManager>().CaptureFunction -= 1f;
             }
 
-            if (WhatIAttack == "ALLIES")
+            if (teamManager.currentTeam == 2)
             {
                 collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
             }
 
-            collider.GetComponent<CaptureManager>().TotalShips -= 1f;
+            collider.GetComponent<CaptureManager>().TotalShips -= 1;
             IsRegistered = false;
         }
 
@@ -154,14 +146,14 @@ public class ShipAI : MonoBehaviour
         {
             if (CurrentPlanet != null)
             {
-                CurrentPlanet.GetComponent<CaptureManager>().TotalShips -= 1f;
+                CurrentPlanet.GetComponent<CaptureManager>().TotalShips -= 1;
 
-                if (WhatIAttack == "ENEMY")
+                if (teamManager.currentTeam == 1)
                 {
                     CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction -= 1f;
                 }
 
-                if (WhatIAttack == "ALLIES")
+                if (teamManager.currentTeam == 1)
                 {
                     CurrentPlanet.GetComponent<CaptureManager>().CaptureFunction += 1f;
                 }

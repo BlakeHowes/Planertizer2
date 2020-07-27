@@ -143,7 +143,7 @@ public class EnemyAI : MonoBehaviour
     {
         GameObject CurrentPlanet = NearbyPlanets[currentPlanetIndex];
         //Defend Planet
-        if (CurrentPlanet.GetComponent<CaptureManager>().CaptureValue > -1)
+        if (CurrentPlanet.GetComponent<CaptureManager>().captureProgress > -1)
         {
             Defend(CurrentPlanet);
         }
@@ -176,7 +176,7 @@ public class EnemyAI : MonoBehaviour
     {
         foreach(GameObject Ship in NearbyAllyShips)
         {
-            Ship.GetComponent<TargetManager>().target.position = planet.transform.position;
+            Ship.GetComponent<ShipAI>().target = planet;
         }
     }
 
