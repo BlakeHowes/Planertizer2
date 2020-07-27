@@ -33,7 +33,7 @@ public class ShipStats : MonoBehaviour
                     GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
                     if (EnemyAi.GetComponent<EnemyAI>().ShipsICanMove.Contains(gameObject))
                     {
-                        EnemyAi.GetComponent<EnemyAI>().RemoveShip(gameObject);
+                        EnemyAi.GetComponent<EnemyAI>().ShipsICanMove.Remove(gameObject);
                     }
                 }
 

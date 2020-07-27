@@ -35,12 +35,12 @@ public class CaptureManager : MonoBehaviour
     void Update()
     {
         CaptureTimer += Time.deltaTime;
-        if (TotalShips > 0f)
+        if (TotalShips > 0)
         {
             CaptureValue = CaptureFunction / TotalShips;
         }
 
-        if (TotalShips < 1f)
+        if (TotalShips < 1)
         {
             CaptureValue = 0f;
         }
@@ -132,7 +132,7 @@ public class CaptureManager : MonoBehaviour
             EnemyAi.GetComponent<EnemyAI>().AddPlanet(gameObject);
             TellEnemyAIThisIsAEnemyPlanet = false;
 
-            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmptyPlanetsInRange.Contains(gameObject))
+            if (EnemyAi.GetComponent<EnemyAI>().NearbyNeutralPlanets.Contains(gameObject))
             {
                 Type = "Empty";
                 EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject);
@@ -146,7 +146,7 @@ public class CaptureManager : MonoBehaviour
             EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject);
             TellEnemyAIThisIsAAlliedPlanet = false;
 
-            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmptyPlanetsInRange.Contains(gameObject))
+            if (EnemyAi.GetComponent<EnemyAI>().NearbyNeutralPlanets.Contains(gameObject))
             {
                 Type = "Empty";
                 EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject);

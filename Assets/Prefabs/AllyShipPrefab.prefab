@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 8558881987841483378}
   m_Layer: 0
   m_Name: AllyShipPrefab
-  m_TagString: ALLIES
+  m_TagString: SHIP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

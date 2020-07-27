@@ -9,6 +9,7 @@ TagManager:
   - PLANET
   - ENEMYAI
   - SPACE
+  - SHIP
   layers:
   - Default
   - TransparentFX

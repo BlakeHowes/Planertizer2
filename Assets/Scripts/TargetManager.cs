@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
-    private Transform target;
+    public Transform target;
     [SerializeField]
     public List<GameObject> SelectedShips = new List<GameObject>();
     public List<GameObject> ShipsToRemove = new List<GameObject>();

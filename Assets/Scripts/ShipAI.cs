@@ -27,10 +27,9 @@ public class ShipAI : MonoBehaviour
 
     private Rigidbody rb;
     [SerializeField]
-    private GameObject target;
+    public GameObject target;
     [SerializeField]
     private LineRenderer Gun;
-    private float turn;
     private Vector3 UniqueSpin;
     private float distancetotarget;
 
@@ -42,6 +41,8 @@ public class ShipAI : MonoBehaviour
     private GameObject CurrentPlanet;
     [SerializeField]
     private GameObject gunstartpos;
+    private TeamManager teamManager;
+    private float turn;
 
     public State state = State.ORBITING;
     public enum State
@@ -52,73 +53,71 @@ public class ShipAI : MonoBehaviour
 
     void OnEnable()
     {
+
         rb = GetComponent<Rigidbody>();
+        teamManager = GetComponent<TeamManager>();
         turn = TurnSpeed;
         UniqueSpin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-        AltitudeFromPlanet += (Random.Range(-0.5f, 2f));
+        AltitudeFromPlanet = (Random.Range(-0.5f, 2f));
 
-        Gun.SetPosition(0, transform.position);
-        Gun.SetPosition(1, transform.position);
+        Gun.enabled = false;
 
-        if (WhatIAttack == "ENEMY")
+        if (teamManager.currentTeam == 1)
         {
             Renderer rend = ShipMesh.GetComponent<Renderer>();
             rend.material.color = Color.blue;
         }
 
-        if (WhatIAttack == "ALLIES")
+        if (teamManager.currentTeam == 2)
         {
             Renderer rend = ShipMesh.GetComponent<Renderer>();
             rend.material.color = Color.red;
         }
     }
+
+
     void OnTriggerEnter(Collider collider)
     {
-        if (collider != this)
+        if (collider.GetComponent<TeamManager>().currentTeam != teamManager.currentTeam && collider.GetComponent<TeamManager>().currentTeam != 0 && collider.tag == "SHIP")
         {
-            if (collider.tag == (WhatIAttack))
+            EnemysInRange.Add(collider.attachedRigidbody.gameObject);
+        }
+
+        if (collider.tag == ("PLANET"))
+        {
+            if(IsRegistered == false)
             {
-                if (collider != null)
+                  
+                if (teamManager.currentTeam == 1)
                 {
-                    EnemysInRange.Add(collider.attachedRigidbody.gameObject);
+                    CurrentPlanet = collider.gameObject;
+                    collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
                 }
+
+                if (teamManager.currentTeam == 2)
+                {
+                    CurrentPlanet = collider.gameObject;
+                    collider.GetComponent<CaptureManager>().CaptureFunction -= 1f;
+                }
+
+                collider.GetComponent<CaptureManager>().TotalShips += 1f;
+                IsRegistered = true;
             }
+        }
 
-            if (collider.tag == ("PLANET"))
+        if(collider.tag == "ENEMYAI")
+        {
+            if (teamManager.currentTeam == 2)
             {
-                if(IsRegistered == false)
-                {
-                    if (WhatIAttack == "ENEMY")
-                    {
-                        CurrentPlanet = collider.gameObject;
-                        collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
-                    }
-
-                    if (WhatIAttack == "ALLIES")
-                    {
-                        CurrentPlanet = collider.gameObject;
-                        collider.GetComponent<CaptureManager>().CaptureFunction -= 1f;
-                    }
-
-                    collider.GetComponent<CaptureManager>().TotalShips += 1f;
-                    IsRegistered = true;
-                }
-            }
-
-            if(collider.tag == "ENEMYAI")
-            {
-                if (WhatIAttack == "ALLIES")
-                {
-                    GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
-                    EnemyAi.GetComponent<EnemyAI>().AddShip(gameObject);
-                }
+                GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
+                EnemyAi.GetComponent<EnemyAI>().ShipsICanMove.Add(gameObject);
             }
         }
     }
 
     void OnTriggerExit(Collider collider)
     {
-        if (collider.tag == (WhatIAttack))
+        if (collider.tag == "SHIP")
         {
             if (EnemysInRange.Count > 0)
             {
@@ -145,11 +144,7 @@ public class ShipAI : MonoBehaviour
 
         if (collider.tag == "ENEMYAI")
         {
-            if(WhatIAttack == "ALLIES")
-            {
-                GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
-                EnemyAi.GetComponent<EnemyAI>().RemoveShip(gameObject);
-            }
+            collider.GetComponent<EnemyAI>().ShipsICanMove.Remove(gameObject);
         }
     }
 
@@ -198,37 +193,28 @@ public class ShipAI : MonoBehaviour
         List<GameObject> ShipsToRemove = new List<GameObject>();
         foreach (GameObject Ship in EnemysInRange)
         {
-            if (Ship != this)
-            {
-                if(Ship == null)
-                {
-                    ShipsToRemove.Add(Ship);
-                    continue;
-                }
 
-                if (Vector3.Distance(transform.position, Ship.transform.position) < nearestDistance)
-                {
-                    nearestDistance = Vector3.Distance(transform.position, Ship.transform.position);
-                    nearestEnemy = Ship;
-                }
+
+            if (Vector3.Distance(transform.position, Ship.transform.position) < nearestDistance)
+            {
+                nearestDistance = Vector3.Distance(transform.position, Ship.transform.position);
+                nearestEnemy = Ship;
             }
+
             if (EnemysInRange.Count > 0)
             {
+
                 Gun.SetPosition(0, gunstartpos.transform.position);
                 Gun.SetPosition(1, nearestEnemy.transform.position);
+                Gun.enabled = true;
                 Ship.GetComponent<ShipStats>().Health -= Time.deltaTime * Damage;
                 
             }
         }
-        foreach (GameObject Ship in ShipsToRemove)
-        {
-            EnemysInRange.Remove(Ship);
-        }
 
         if (EnemysInRange.Count == 0)
         {
-            Gun.SetPosition(0, transform.position);
-            Gun.SetPosition(1, transform.position);
+            Gun.enabled = false;
         }
     }
 
@@ -247,61 +233,44 @@ public class ShipAI : MonoBehaviour
     }
     void Orbiting()
     {
+
         distancetotarget = Vector3.Distance(target.transform.position, transform.position);
         Vector3 targetDirection = target.transform.position - transform.position;
 
-        var rotation = (targetDirection) + (UniqueSpin);
-        Vector3 RotateTowardsTargetDirection = Vector3.RotateTowards(transform.forward, rotation, TurnSpeed, 0.0f);
-        Vector3 RotateAwayFromTargetDirection = Vector3.RotateTowards(transform.forward, -rotation, TurnSpeed, 0.0f);
+        var rotation = targetDirection + UniqueSpin;
+        float sign = Mathf.Sign(Vector3.Angle(targetDirection, transform.forward) - 90);
 
-        //This Causes the ships to fly towards the target
-        if (distancetotarget > (AltitudeFromPlanet + OrbitRange))
+
+        //Towards target
+        if (distancetotarget > AltitudeFromPlanet + OrbitRange)
         {
-            transform.rotation = Quaternion.LookRotation(RotateTowardsTargetDirection);
-            rb.velocity = transform.forward * ShipSpeed;
+            sign = 1;
             TurnSpeed = turn / 6;
         }
-
-
-        if (distancetotarget < (AltitudeFromPlanet + OrbitRange) && (distancetotarget > (AltitudeFromPlanet - OrbitRange)))
+        //At correct altitude
+        if (distancetotarget < AltitudeFromPlanet + OrbitRange && distancetotarget > AltitudeFromPlanet - OrbitRange)
         {
-            //this is at the correct flight Height distance
-            float angle = Vector3.Angle(targetDirection, transform.forward);
-
-            rb.velocity = transform.forward * ShipSpeed;
             TurnSpeed = turn / 15f;
-            //this circularises their movement so they fly parallel to the target
-            if (angle < 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateAwayFromTargetDirection);
-            }
-            if (angle > 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateTowardsTargetDirection);
-            }
         }
-        //this attempts to cirularise the orbit as it approches the planet to stop bouncing
-        if (distancetotarget < (AltitudeFromPlanet - OrbitRange))
+        //Approaching planet
+        if (distancetotarget < AltitudeFromPlanet - OrbitRange)
         {
-            float angle = Vector3.Angle(targetDirection, transform.forward);
-            if (angle < 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateAwayFromTargetDirection);
-            }
-            if (angle > 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateTowardsTargetDirection);
-            }
-            rb.velocity = transform.forward * ShipSpeed;
             TurnSpeed = turn / 3;
         }
-        //this stops them crashing into the planet
+        //Anti-crash
         if (distancetotarget < AltitudeFromPlanet / 2)
         {
-            transform.rotation = Quaternion.LookRotation(RotateAwayFromTargetDirection);
+            sign = -1;
             TurnSpeed = turn;
         }
+
+        Quaternion newRotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, rotation * sign, TurnSpeed, 0.0f));
+        rb.rotation = newRotation;
+        rb.velocity = transform.forward * ShipSpeed;
+
     }
+
+
     void Chasing()
     {
         /*
