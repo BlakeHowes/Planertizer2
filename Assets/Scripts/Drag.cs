@@ -56,11 +56,12 @@ public class Drag : MonoBehaviour
 
         if (uiBox.enabled == true)
         {
+            screenPos2 = Input.mousePosition;
             bottomLeft = new Vector2(Mathf.Min(screenPos1.x, screenPos2.x), Mathf.Min(screenPos1.y, screenPos2.y));
             topRight = new Vector2(Mathf.Max(screenPos1.x, screenPos2.x), Mathf.Max(screenPos1.y, screenPos2.y));
 
             uiBox.rectTransform.position = bottomLeft;
-            screenPos2 = Input.mousePosition;
+            
             uiBox.rectTransform.sizeDelta = topRight - bottomLeft;
         }
 
