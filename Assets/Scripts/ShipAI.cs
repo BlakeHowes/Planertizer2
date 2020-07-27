@@ -48,6 +48,13 @@ public class ShipAI : MonoBehaviour
     private GameObject gunstartpos;
     private bool IamNew;
 
+    private bool search;
+    private float searchtimer;
+    private GameObject NewTarget;
+    private float AltitudeTemp;
+    [SerializeField]
+    private LayerMask layermask;
+
 
     public State state = State.ORBITING;
     public enum State
@@ -89,7 +96,9 @@ public class ShipAI : MonoBehaviour
             {
                 if (collider.gameObject.tag == "PLANET")
                 {
-                    MoveTarget(collider.gameObject, collider.gameObject.GetComponent<CaptureManager>().Altitude);
+                    target.transform.position = collider.transform.position;
+                    target.transform.SetParent(collider.transform);
+                    AltitudeFromPlanet = collider.transform.gameObject.GetComponent<CaptureManager>().Altitude;
                     IamNew = false;
                 }
             }
@@ -195,10 +204,43 @@ public class ShipAI : MonoBehaviour
         }
     }
 
+    //Upgraded Move Position
     public void MoveTarget(GameObject NewTargetPosition, float Altitude)
     {
-        target.transform.position = NewTargetPosition.transform.position;
-        target.transform.SetParent(NewTargetPosition.transform);
+        NewTarget = NewTargetPosition;
+        AltitudeTemp = Altitude;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, NewTargetPosition.transform.position - transform.position, out hit, 10000f, layermask))
+        {
+            if(hit.transform != null)
+            {
+                if (hit.transform == NewTargetPosition.transform)
+                {
+                    target.transform.position = NewTargetPosition.transform.position;
+                    target.transform.SetParent(NewTargetPosition.transform);
+                    AltitudeFromPlanet = Altitude;
+                }
+
+                if (hit.transform != NewTargetPosition.transform)
+                {
+                    target.transform.position = hit.transform.position;
+                    target.transform.SetParent(NewTargetPosition.transform);
+
+                    if (hit.transform.tag == "PLANET")
+                    {
+                        AltitudeFromPlanet = hit.transform.gameObject.GetComponent<CaptureManager>().Altitude;
+                    }
+
+                    search = true;
+                }
+            }
+        }
+    }
+
+    public void MoveTargetToSpace(Vector3 NewTargetPosition, float Altitude)
+    {
+        target.transform.position = NewTargetPosition;
+        target.transform.SetParent(null);
         AltitudeFromPlanet = Altitude;
     }
 
@@ -253,6 +295,41 @@ public class ShipAI : MonoBehaviour
             Gun.SetPosition(0, transform.position);
             Gun.SetPosition(1, transform.position);
         }
+
+        if (search == true) // Search function if ray didnt hit target
+        {
+            searchtimer += Time.deltaTime;
+            if(searchtimer > 1)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, NewTarget.transform.position - transform.position, out hit, 10000f, layermask))
+                {
+                    if (hit.transform != null)
+                    {
+                        if (hit.transform == NewTarget.transform)
+                        {
+                            target.transform.position = NewTarget.transform.position;
+                            target.transform.SetParent(NewTarget.transform);
+                            AltitudeFromPlanet = AltitudeTemp;
+
+                            search = false;
+                        }
+
+                        if (hit.transform != NewTarget.transform)
+                        {
+                            target.transform.position = hit.transform.position;
+                            target.transform.SetParent(NewTarget.transform);
+                            if (hit.transform.tag == "PLANET")
+                            {
+                                AltitudeFromPlanet = hit.transform.gameObject.GetComponent<CaptureManager>().Altitude;
+                            }
+
+                            searchtimer = 0f;
+                        }
+                    }
+                }
+            }
+        } 
     }
 
     void FixedUpdate()

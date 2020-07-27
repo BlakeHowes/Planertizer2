@@ -187,6 +187,9 @@ MonoBehaviour:
   EnemysInRange: []
   other: {fileID: 1701320133889645633}
   gunstartpos: {fileID: 891418535289431056}
+  layermask:
+    serializedVersion: 2
+    m_Bits: 512
   state: 0
 --- !u!135 &1701320133889645633
 SphereCollider:
