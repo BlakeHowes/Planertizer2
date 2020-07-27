@@ -246,7 +246,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 45ccf687b82fdcf46ada77eb90616678, type: 3}
+  - {fileID: 2100000, guid: 8ab14cf3d8754a744b98e7f788f57ac3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -417,6 +417,8 @@ MonoBehaviour:
   Damage: 2
   WhatIAttack: ENEMY
   ShipMesh: {fileID: 8558881988587291733}
+  AllyColor: {r: 0.25, g: 0.49411768, b: 1, a: 0}
+  EnemyColor: {r: 0, g: 0, b: 0, a: 0}
   target: {fileID: 8558881988616480639}
   Gun: {fileID: 1080205844804519010}
   EnemysInRange: []

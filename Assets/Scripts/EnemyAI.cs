@@ -209,9 +209,9 @@ public class EnemyAI : MonoBehaviour
         {
             if (actioncount < (PartySize + CurrentPlanet.GetComponent<CaptureManager>().TotalShips))
             {
-                Vector3 MoveTarget = CurrentPlanet.transform.position;
-                Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
-                actioncount += 1;
+                GameObject NewTargetPosition = CurrentPlanet;
+                float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
+                Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
             }
         }
     }
@@ -233,8 +233,9 @@ public class EnemyAI : MonoBehaviour
                             {
                                 if (CurrentPlanet.GetComponent<CaptureManager>().TotalShips > 1)
                                 {
-                                    Vector3 MoveTarget = Planet.transform.position;
-                                    Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
+                                    GameObject NewTargetPosition = CurrentPlanet;
+                                    float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
+                                    Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                                 }
                             }
                             SendShips += 1;
@@ -254,8 +255,9 @@ public class EnemyAI : MonoBehaviour
             {
                 foreach (GameObject Ship in ShipsICanMove)
                 {
-                    Vector3 MoveTarget = Planet.transform.position;
-                    Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
+                    GameObject NewTargetPosition = CurrentPlanet;
+                    float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
+                    Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                 }
             }
         }
@@ -274,9 +276,9 @@ public class EnemyAI : MonoBehaviour
                     {
                     if (remeberme != null)
                     {
-                        Vector3 MoveTarget = remeberme.transform.position;
-                        Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
-                        actioncount += 1;
+                        GameObject NewTargetPosition = CurrentPlanet;
+                        float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
+                        Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                     }
                     }
                 }

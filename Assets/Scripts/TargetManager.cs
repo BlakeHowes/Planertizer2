@@ -10,6 +10,7 @@ public class TargetManager : MonoBehaviour
     public List<GameObject> ShipsToRemove = new List<GameObject>();
     [SerializeField]
     private LayerMask layermask;
+    private bool paused;
     void Update()
     {
         foreach (GameObject Ship in SelectedShips)
@@ -37,19 +38,37 @@ public class TargetManager : MonoBehaviour
                     {
                         if (hit.transform.tag == "PLANET")
                         {
-                            Vector3 NewTargetPosition = hit.transform.position;
-                            Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition);
+                            GameObject NewTargetPosition = hit.transform.gameObject;
+                            float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
+                            Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition,Altitude);
                         }
 
                         if (hit.transform.tag == "SPACE")
                         {
-                            Vector3 NewTargetPosition = hit.point;
-                            Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition);
+                            GameObject NewTargetPosition = hit.transform.gameObject;
+                            float Altitude = 1 + Random.Range(-0.5f, 10f);
+                            Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                         }
                     }
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            paused = !paused;
+        }
+
+        if(paused == true)
+        {
+            Time.timeScale = 0f;
+        }
+
+        if (paused == false)
+        {
+            Time.timeScale = 1f;
+        }
+
         ShipsToRemove.Clear();
     }
     public void ClearSelection()

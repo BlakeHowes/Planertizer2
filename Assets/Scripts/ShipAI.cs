@@ -24,6 +24,10 @@ public class ShipAI : MonoBehaviour
     [SerializeField]
     private float persuitRange;
     */
+    [SerializeField]
+    private Color AllyColor;
+    [SerializeField]
+    private Color EnemyColor;
 
     private Rigidbody rb;
     [SerializeField]
@@ -42,6 +46,8 @@ public class ShipAI : MonoBehaviour
     private GameObject CurrentPlanet;
     [SerializeField]
     private GameObject gunstartpos;
+    private bool IamNew;
+
 
     public State state = State.ORBITING;
     public enum State
@@ -52,6 +58,7 @@ public class ShipAI : MonoBehaviour
 
     void OnEnable()
     {
+        IamNew = true;
         rb = GetComponent<Rigidbody>();
         turn = TurnSpeed;
         UniqueSpin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
@@ -63,17 +70,31 @@ public class ShipAI : MonoBehaviour
         if (WhatIAttack == "ENEMY")
         {
             Renderer rend = ShipMesh.GetComponent<Renderer>();
-            rend.material.color = Color.blue;
+            rend.material.color = AllyColor;
         }
 
         if (WhatIAttack == "ALLIES")
         {
             Renderer rend = ShipMesh.GetComponent<Renderer>();
-            rend.material.color = Color.red;
+            rend.material.color = EnemyColor;
         }
+
+        
     }
     void OnTriggerEnter(Collider collider)
     {
+        if(collider != null)
+        {
+            if (IamNew == true)
+            {
+                if (collider.gameObject.tag == "PLANET")
+                {
+                    MoveTarget(collider.gameObject, collider.gameObject.GetComponent<CaptureManager>().Altitude);
+                    IamNew = false;
+                }
+            }
+        }
+
         if (collider != this)
         {
             if (collider.tag == (WhatIAttack))
@@ -174,9 +195,11 @@ public class ShipAI : MonoBehaviour
         }
     }
 
-    public void MoveTarget(Vector3 NewTargetPosition)
+    public void MoveTarget(GameObject NewTargetPosition, float Altitude)
     {
-        target.transform.position = NewTargetPosition;
+        target.transform.position = NewTargetPosition.transform.position;
+        target.transform.SetParent(NewTargetPosition.transform);
+        AltitudeFromPlanet = Altitude;
     }
 
     public void Highlight()
@@ -188,7 +211,7 @@ public class ShipAI : MonoBehaviour
     public void RemoveHighlight()
     {
         Renderer rend = ShipMesh.GetComponent<Renderer>();
-        rend.material.color = Color.blue;
+        rend.material.color = AllyColor;
     }
 
     private void Update()

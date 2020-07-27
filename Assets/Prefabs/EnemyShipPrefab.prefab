@@ -180,6 +180,8 @@ MonoBehaviour:
   Damage: 2
   WhatIAttack: ALLIES
   ShipMesh: {fileID: 5606695910494565456}
+  AllyColor: {r: 0, g: 0, b: 0, a: 0}
+  EnemyColor: {r: 1, g: 0.25, b: 0.25, a: 0}
   target: {fileID: 1701320132973049671}
   Gun: {fileID: 1991726171654133706}
   EnemysInRange: []
@@ -381,11 +383,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1701320133889645639}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
-        type: 3}
-      propertyPath: m_Name
-      value: Alien ship 2
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -455,6 +452,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 48.6121
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c61ba64d0cc7e14b8e02728d257b5a6, type: 2}
+    - target: {fileID: -927199367670048503, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
+        type: 3}
+      propertyPath: m_Name
+      value: Alien ship 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d44ba7ed8cfe14685857d3fe37fbee, type: 3}
