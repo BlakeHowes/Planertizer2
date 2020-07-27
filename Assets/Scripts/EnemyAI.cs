@@ -5,18 +5,19 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField]
-    private int i;
+    private int currentPlanetIndex;
 
     [SerializeField]
     List<GameObject> TotalEnemyPlanets = new List<GameObject>();
     [SerializeField]
+    List<GameObject> AllyPlanetsInRange = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> NearbyEmptyPlanetsInRange = new List<GameObject>();
+    [SerializeField]
     List<GameObject> EnemyPlanetsInRange = new List<GameObject>();
     [SerializeField]
-    public List<GameObject> NearbyEmpyPlanetsInRange = new List<GameObject>();
-    [SerializeField]
-    List<GameObject> AlliedPlanetsInRange = new List<GameObject>();
-    [SerializeField]
     public List<GameObject> ShipsICanMove = new List<GameObject>();
+    List<GameObject> ShipsToRemove = new List<GameObject>();
 
 
     [SerializeField]
@@ -31,10 +32,19 @@ public class EnemyAI : MonoBehaviour
 
     private bool reset;
     [SerializeField]
-    GameObject remeberme;
+    GameObject AllyPlanetNearEnemies;
     private int SeekFarWayPlanetsChecker;
     private float radiusonstart;
     private int ifixed;
+
+    private Vector3 startPos;
+
+
+
+    private void Start()
+    {
+        startPos = transform.position;
+    }
 
     private void Awake()
     {
@@ -42,52 +52,60 @@ public class EnemyAI : MonoBehaviour
         radiusonstart = col.radius;
     }
 
-    public void AddPlanet(GameObject Planet,string Type)
+    //Add planet to list based on type
+    public void AddPlanet(GameObject planet)
     {
-        if (Type == "MyPlanets")
-        {
-            TotalEnemyPlanets.Add(Planet);
-        }
+        int planet_team = planet.GetComponent<TeamManager>().currentTeam;
+        int self_team = GetComponent<TeamManager>().currentTeam;
+        int relationship = 0;
 
-        if (Type == "Enemy")
-        {
-            EnemyPlanetsInRange.Add(Planet);
-        }
 
-        if (Type == "Empty")
-        {
-            NearbyEmpyPlanetsInRange.Add(Planet);
-        }
+        relationship = (self_team != planet_team && planet_team != 0) ? -1 : 1;
 
-        if (Type == "Allied")
+
+        switch (relationship)
         {
-            AlliedPlanetsInRange.Add(Planet);
+            case 0:
+                NearbyEmptyPlanetsInRange.Add(planet);
+                break;
+            case -1:
+                AllyPlanetsInRange.Add(planet);
+                break;
+            case 1:
+                EnemyPlanetsInRange.Add(planet);
+                break;
+
         }
     }
 
-    public void RemovePlanet(GameObject Planet, string Type)
+    //Remove based on type
+    public void RemovePlanet(GameObject planet)
     {
-        if (Type == "MyPlanets")
+        int planet_team = planet.GetComponent<TeamManager>().currentTeam;
+        int self_team = GetComponent<TeamManager>().currentTeam;
+        int relationship = 0;
+
+
+        relationship = (self_team != planet_team && planet_team != 0) ? -1 : 1;
+
+
+        switch (relationship)
         {
-            TotalEnemyPlanets.Remove(Planet);
+            case 0:
+                NearbyEmptyPlanetsInRange.Remove(planet);
+                break;
+            case -1:
+                AllyPlanetsInRange.Remove(planet);
+                break;
+            case 1:
+                EnemyPlanetsInRange.Remove(planet);
+                break;
+
         }
 
-        if (Type == "Enemy")
-        {
-            EnemyPlanetsInRange.Remove(Planet);
-        }
-
-        if (Type == "Empty")
-        {
-            NearbyEmpyPlanetsInRange.Remove(Planet);
-        }
-
-        if (Type == "Allied")
-        {
-            AlliedPlanetsInRange.Remove(Planet);
-        }
     }
 
+            //Remove ship from list
     public void RemoveShip(GameObject Ship)
     {
         ShipsICanMove.Remove(Ship);
@@ -95,7 +113,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        List<GameObject> ShipsToRemove = new List<GameObject>();
+
         foreach (GameObject Ship in ShipsICanMove)
         {
             if (Ship == null)
@@ -107,51 +125,49 @@ public class EnemyAI : MonoBehaviour
         foreach (GameObject Ship in ShipsToRemove)
         {
             ShipsICanMove.Remove(Ship);
+            ShipsToRemove.Remove(Ship);
         }
-
-        ShipsToRemove.Clear();
 
         TurnTimer += Time.deltaTime;
         if (TurnTimer >= AiSpeed)
         {
-            if (AlliedPlanetsInRange.Count > 0)
+            if (AllyPlanetsInRange.Count > 0)
             {
-                if(i > 0)
+                if(currentPlanetIndex > 0)
                 {
-                    ifixed = i - 1;
-                    if (ifixed < TotalEnemyPlanets.Count)
+                    if (currentPlanetIndex-1 < TotalEnemyPlanets.Count)
                     {
-                        remeberme = TotalEnemyPlanets[ifixed];
+                        AllyPlanetNearEnemies = TotalEnemyPlanets[currentPlanetIndex-1];
                     }
 
                 }
             }
 
-            if (i >= TotalEnemyPlanets.Count)
+            if (currentPlanetIndex >= TotalEnemyPlanets.Count)
             {
-                i = 0;
+                currentPlanetIndex = 0;
                 SeekFarWayPlanetsChecker = 0;
             }
 
             if (TotalEnemyPlanets.Count > 0)
             {
-                if((NearbyEmpyPlanetsInRange.Count == 0) && (AlliedPlanetsInRange.Count == 0))
+                if((NearbyEmptyPlanetsInRange.Count == 0) && (AllyPlanetsInRange.Count == 0))
                 {
                     SeekFarWayPlanetsChecker += 1;
                 }
 
-                transform.position = TotalEnemyPlanets[i].transform.position;
+                transform.position = TotalEnemyPlanets[currentPlanetIndex].transform.position;
 
-                if(i < TotalEnemyPlanets.Count)
+                if(currentPlanetIndex < TotalEnemyPlanets.Count)
                 {
-                    i += 1;
+                    currentPlanetIndex += 1;
                 }
 
                 if (SeekFarWayPlanetsChecker == TotalEnemyPlanets.Count)
                 {
                     SphereCollider Col = GetComponent<SphereCollider>();
                     Col.radius = Col.radius * 1.1f;
-                    remeberme = null;
+                    AllyPlanetNearEnemies = null;
 
                 }
             }
@@ -159,49 +175,45 @@ public class EnemyAI : MonoBehaviour
             foreach (GameObject Planet in TotalEnemyPlanets)
             {
                 CurrentPlanet = Planet;
-                if(Planet.GetComponent<CaptureManager>().AmICaptured > -1)
-
-                {
-                    DefendPlanet();
-                }
-
                 DecideWhatToDo();
             }
 
             TurnTimer = 0f;
-            reset = true;
-        }
-
-        if (TurnTimer > 0.1f)
-        {
-            if(CurrentPlanet != null)
-            {
-  
-            }
         }
     }
+
+    //Determine next actuin
     void DecideWhatToDo()
     {
-        if (NearbyEmpyPlanetsInRange.Count > 0)
+        //Defend Planet
+        if (CurrentPlanet.GetComponent<CaptureManager>().CaptureValue > -1)
+        {
+            DefendPlanet();
+        }
+        //If nearby planet, reset radius and coloniz
+        if (NearbyEmptyPlanetsInRange.Count > 0)
         {
             Colonize();
             SphereCollider col = GetComponent<SphereCollider>();
             col.radius = radiusonstart;
         }
-
-        if ((NearbyEmpyPlanetsInRange.Count == 0) && (AlliedPlanetsInRange.Count > 0))
+        //If no nearby empty, and more than 0 enemy planets, attack
+        if ((NearbyEmptyPlanetsInRange.Count == 0) && (EnemyPlanetsInRange.Count > 0))
         {
             Attack();
             SphereCollider col = GetComponent<SphereCollider>();
             col.radius = radiusonstart;
         }
 
-        if((NearbyEmpyPlanetsInRange.Count == 0) && (AlliedPlanetsInRange.Count == 0) && (EnemyPlanetsInRange.Count > 1))
+        //If no enemy/neutral planets, move in ally direction/Scout
+        if((NearbyEmptyPlanetsInRange.Count == 0) && (EnemyPlanetsInRange.Count == 0) && (AllyPlanetsInRange.Count > 1))
         {
             MoveShipsTowardsAllies();
         }
+
     }
 
+    //Planet defense
     void DefendPlanet()
     {
         float actioncount = 0f;
@@ -216,11 +228,12 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    //Colonize planets
     void Colonize()
     {
-        if (CurrentPlanet.GetComponent<CaptureManager>().AmICaptured == -1)
+        if (CurrentPlanet.GetComponent<CaptureManager>().CaptureValue == -1)
         {
-            foreach (GameObject Planet in NearbyEmpyPlanetsInRange)
+            foreach (GameObject Planet in NearbyEmptyPlanetsInRange)
             {
                 if (CurrentPlanet.GetComponent<CaptureManager>().TotalShips > 1)
                 {
@@ -248,7 +261,7 @@ public class EnemyAI : MonoBehaviour
 
     void Attack()
     {
-        foreach (GameObject Planet in AlliedPlanetsInRange)
+        foreach (GameObject Planet in EnemyPlanetsInRange)
         {
             if (ShipsICanMove.Count > Planet.GetComponent<CaptureManager>().TotalShips)
             {
@@ -262,22 +275,24 @@ public class EnemyAI : MonoBehaviour
         resetpos();
     }
 
+
+    
     void MoveShipsTowardsAllies()
     {
-        float actioncount = 0f;
-        foreach (GameObject Planet in EnemyPlanetsInRange)
+        float shipsSent = 0f;
+        foreach (GameObject Planet in AllyPlanetsInRange)
         {
 
                 foreach (GameObject Ship in ShipsICanMove)
                 {
-                    if (actioncount < (CurrentPlanet.GetComponent<CaptureManager>().TotalShips) - DefensiveFactor)
+                    if (shipsSent < (CurrentPlanet.GetComponent<CaptureManager>().TotalShips) - DefensiveFactor)
                     {
-                    if (remeberme != null)
-                    {
-                        Vector3 MoveTarget = remeberme.transform.position;
-                        Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
-                        actioncount += 1;
-                    }
+                        if (AllyPlanetNearEnemies != null)
+                        {
+                            Vector3 MoveTarget = AllyPlanetNearEnemies.transform.position;
+                            Ship.GetComponent<ShipAI>().MoveTarget(MoveTarget);
+                            shipsSent += 1;
+                        }
                     }
                 }
                 ShipsICanMove.Clear();
@@ -285,24 +300,15 @@ public class EnemyAI : MonoBehaviour
         resetpos();
     }
 
+
+
     void resetpos()
     {
-
-
-        Vector3 resetcolpos = new Vector3(0f, 200f, 0f);
-        transform.position = resetcolpos;
+        transform.position = startPos;
+        AllyPlanetsInRange.Clear();
         EnemyPlanetsInRange.Clear();
-        AlliedPlanetsInRange.Clear();
-        NearbyEmpyPlanetsInRange.Clear();
-        reset = false;
+        NearbyEmptyPlanetsInRange.Clear();
 
-        if (TurnTimer > 0.2)
-        {
-            if (ifixed < TotalEnemyPlanets.Count)
-            {
- 
-            }
-        }
     }
 
     public void AddShip(GameObject Ship)

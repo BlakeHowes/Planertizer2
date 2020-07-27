@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1133928451017753962}
   - component: {fileID: 1133928451017753963}
   - component: {fileID: 1133928451017753975}
+  - component: {fileID: 3327323522868513732}
   m_Layer: 9
   m_Name: PlanetPrefab
   m_TagString: PLANET
@@ -120,6 +121,19 @@ MonoBehaviour:
     type: 3}
   SpawnTimer: 0
   TellEnemyAIThisIsAEnemyPlanet: 0
+--- !u!114 &3327323522868513732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133928451017753960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afba0233c64558748b5e99a3fede9bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTeam: 0
 --- !u!1 &1133928451694133138
 GameObject:
   m_ObjectHideFlags: 0

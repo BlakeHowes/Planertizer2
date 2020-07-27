@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9159130915030187298}
   - component: {fileID: 9159130915030187309}
   - component: {fileID: 9159130915030187308}
+  - component: {fileID: 7104121858270480392}
   - component: {fileID: 9159130915030187311}
   m_Layer: 0
   m_Name: EnemyAi
@@ -110,6 +111,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7104121858270480392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9159130915030187310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afba0233c64558748b5e99a3fede9bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTeam: 2
 --- !u!114 &9159130915030187311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,10 +136,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a85522fd86271834c8cdd3507e79c63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPlanetIndex: 0
   TotalEnemyPlanets: []
+  AllyPlanetsInRange: []
+  NearbyEmptyPlanetsInRange: []
   EnemyPlanetsInRange: []
-  NearbyEmpyPlanetsInRange: []
-  AlliedPlanetsInRange: []
   ShipsICanMove: []
   AiSpeed: 2
   DefensiveFactor: 1
+  PartySize: 0
+  TurnTimer: 0
+  AllyPlanetNearEnemies: {fileID: 0}

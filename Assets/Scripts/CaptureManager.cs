@@ -13,7 +13,7 @@ public class CaptureManager : MonoBehaviour
     [SerializeField]
     private float TimeTakenToCapture;
     [SerializeField]
-    public float AmICaptured;
+    public float CaptureValue;
     private bool Captured;
     private bool NoLongerEmpty;
     [SerializeField]
@@ -37,18 +37,16 @@ public class CaptureManager : MonoBehaviour
         CaptureTimer += Time.deltaTime;
         if (TotalShips > 0f)
         {
-            AmICaptured = CaptureFunction / TotalShips;
+            CaptureValue = CaptureFunction / TotalShips;
         }
 
         if (TotalShips < 1f)
         {
-            AmICaptured = 0f;
+            CaptureValue = 0f;
         }
 
-        if (AmICaptured == 1)
+        if (CaptureValue == 1)
         {
-            if (Captured == false)
-            {
                 if(CaptureTimer >= TimeTakenToCapture)
                 {
                     var planetrenderer = GetComponent<Renderer>();
@@ -59,46 +57,43 @@ public class CaptureManager : MonoBehaviour
 
                     TellEnemyAIThisIsAAlliedPlanet = true;
                 }
-            }
         }
 
-        if (AmICaptured == -1)
+        if (CaptureValue == -1)
         {
-            if (Captured == false)
+            if (CaptureTimer >= TimeTakenToCapture)
             {
-                if (CaptureTimer >= TimeTakenToCapture)
-                {
-                    var planetrenderer = GetComponent<Renderer>();
-                    planetrenderer.material.color = Color.red;
-                    Captured = true;
-                    NoLongerEmpty = true;
-                    Spawning = -1f;
+                var planetrenderer = GetComponent<Renderer>();
+                planetrenderer.material.color = Color.red;
+                Captured = true;
+                NoLongerEmpty = true;
+                Spawning = -1f;
 
-                    TellEnemyAIThisIsAEnemyPlanet = true;
-                }
+                TellEnemyAIThisIsAEnemyPlanet = true;
             }
+
         }
 
-        if((AmICaptured > -1) && (AmICaptured < 0))
+        if((CaptureValue > -1) && (CaptureValue < 0))
         {
             Spawning = 0f;
             SpawnTimer = 0f;
         }
 
 
-        if ((AmICaptured > 0) && (AmICaptured < 1))
+        if ((CaptureValue > 0) && (CaptureValue < 1))
         {
             Spawning = 0f;
             SpawnTimer = 0f;
         }
 
-        if ((AmICaptured != 1) & (AmICaptured >= 0))
+        if ((CaptureValue != 1) & (CaptureValue >= 0))
         {
             CaptureTimer = 0f;
             Captured = false;
         }
 
-        if ((AmICaptured != -1) & (AmICaptured < 0))
+        if ((CaptureValue != -1) & (CaptureValue < 0))
         {
             CaptureTimer = 0f;
             Captured = false;
@@ -134,13 +129,13 @@ public class CaptureManager : MonoBehaviour
         {
             string Type = "MyPlanets";
             GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
-            EnemyAi.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+            EnemyAi.GetComponent<EnemyAI>().AddPlanet(gameObject);
             TellEnemyAIThisIsAEnemyPlanet = false;
 
-            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmpyPlanetsInRange.Contains(gameObject))
+            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmptyPlanetsInRange.Contains(gameObject))
             {
                 Type = "Empty";
-                EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+                EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject);
             }
         }
 
@@ -148,13 +143,13 @@ public class CaptureManager : MonoBehaviour
         {
             string Type = "MyPlanets";
             GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
-            EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+            EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject);
             TellEnemyAIThisIsAAlliedPlanet = false;
 
-            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmpyPlanetsInRange.Contains(gameObject))
+            if (EnemyAi.GetComponent<EnemyAI>().NearbyEmptyPlanetsInRange.Contains(gameObject))
             {
                 Type = "Empty";
-                EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+                EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject);
             }
         }
     }
@@ -164,22 +159,22 @@ public class CaptureManager : MonoBehaviour
     {
         if (col.tag == "ENEMYAI")
         {
-            if (AmICaptured == -1)
+            if (CaptureValue == -1)
             {
                 string Type = "Enemy";
-                col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+                col.GetComponent<EnemyAI>().AddPlanet(gameObject);
             }
 
-            if ((AmICaptured > -1) && (AmICaptured < 1))
+            if ((CaptureValue > -1) && (CaptureValue < 1))
             {
                 string Type = "Empty";
-                col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+                col.GetComponent<EnemyAI>().AddPlanet(gameObject);
             }
 
-            if (AmICaptured == 1)
+            if (CaptureValue == 1)
             {
                 string Type = "Allied";
-                col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
+                col.GetComponent<EnemyAI>().AddPlanet(gameObject);
             }
         }
     }
@@ -188,25 +183,25 @@ public class CaptureManager : MonoBehaviour
     {
         if (col.tag == "ENEMYAI")
         {
-            if (AmICaptured == -1)
+            if (CaptureValue == -1)
             {
                 string Type = "Enemy";
-                col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+                col.GetComponent<EnemyAI>().RemovePlanet(gameObject);
             }
 
-            if ((AmICaptured > -1) && (AmICaptured < 1))
+            if ((CaptureValue > -1) && (CaptureValue < 1))
             {
                 if (NoLongerEmpty == false)
                 {
                     string Type = "Empty";
-                    col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+                    col.GetComponent<EnemyAI>().RemovePlanet(gameObject);
                 }
             }
 
-            if (AmICaptured == 1)
+            if (CaptureValue == 1)
             {
                 string Type = "Allied";
-                col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
+                col.GetComponent<EnemyAI>().RemovePlanet(gameObject);
             }
         }
     }
