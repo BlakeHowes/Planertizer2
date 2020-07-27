@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipSpeed: 3
+  HeightMultiplyer: 1
   AltitudeFromPlanet: 6
   TurnSpeed: 0.1
   OrbitRange: 0.4

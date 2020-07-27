@@ -9,6 +9,8 @@ public class ShipAI : MonoBehaviour
     [SerializeField]
     private float ShipSpeed;
     [SerializeField]
+    private float HeightMultiplyer;
+    [SerializeField]
     private float AltitudeFromPlanet;
     [SerializeField]
     private float TurnSpeed;
@@ -56,6 +58,7 @@ public class ShipAI : MonoBehaviour
     private LayerMask layermask;
 
 
+
     public State state = State.ORBITING;
     public enum State
     {
@@ -98,7 +101,7 @@ public class ShipAI : MonoBehaviour
                 {
                     target.transform.position = collider.transform.position;
                     target.transform.SetParent(collider.transform);
-                    AltitudeFromPlanet = collider.transform.gameObject.GetComponent<CaptureManager>().Altitude;
+                    AltitudeFromPlanet = collider.transform.gameObject.GetComponent<CaptureManager>().Altitude * HeightMultiplyer;
                     IamNew = false;
                 }
             }
@@ -218,7 +221,7 @@ public class ShipAI : MonoBehaviour
                 {
                     target.transform.position = NewTargetPosition.transform.position;
                     target.transform.SetParent(NewTargetPosition.transform);
-                    AltitudeFromPlanet = Altitude;
+                    AltitudeFromPlanet = Altitude * HeightMultiplyer;
                 }
 
                 if (hit.transform != NewTargetPosition.transform)
@@ -228,7 +231,7 @@ public class ShipAI : MonoBehaviour
 
                     if (hit.transform.tag == "PLANET")
                     {
-                        AltitudeFromPlanet = hit.transform.gameObject.GetComponent<CaptureManager>().Altitude;
+                        AltitudeFromPlanet = hit.transform.gameObject.GetComponent<CaptureManager>().Altitude * HeightMultiplyer;
                     }
 
                     search = true;
@@ -241,7 +244,7 @@ public class ShipAI : MonoBehaviour
     {
         target.transform.position = NewTargetPosition;
         target.transform.SetParent(null);
-        AltitudeFromPlanet = Altitude;
+        AltitudeFromPlanet = Altitude * HeightMultiplyer;
     }
 
     public void Highlight()
@@ -310,7 +313,7 @@ public class ShipAI : MonoBehaviour
                         {
                             target.transform.position = NewTarget.transform.position;
                             target.transform.SetParent(NewTarget.transform);
-                            AltitudeFromPlanet = AltitudeTemp;
+                            AltitudeFromPlanet = AltitudeTemp * HeightMultiplyer;
 
                             search = false;
                         }
@@ -321,7 +324,7 @@ public class ShipAI : MonoBehaviour
                             target.transform.SetParent(NewTarget.transform);
                             if (hit.transform.tag == "PLANET")
                             {
-                                AltitudeFromPlanet = hit.transform.gameObject.GetComponent<CaptureManager>().Altitude;
+                                AltitudeFromPlanet = hit.transform.gameObject.GetComponent<CaptureManager>().Altitude * HeightMultiplyer;
                             }
 
                             searchtimer = 0f;

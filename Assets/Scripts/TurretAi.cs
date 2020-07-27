@@ -7,6 +7,8 @@ public class TurretAi : MonoBehaviour
     [SerializeField]
     private string WhatIAttack;
     [SerializeField]
+    private LineRenderer Gun;
+    [SerializeField]
     private float Damage;
     public List<GameObject> EnemysInRange = new List<GameObject>();
     public Collider other;
@@ -55,14 +57,21 @@ public class TurretAi : MonoBehaviour
             }
             if (EnemysInRange.Count > 0)
             {
-                Debug.DrawLine(transform.position, nearestEnemy.transform.position, Color.red);
+                Gun.enabled = true;
+                Gun.SetPosition(0, transform.position);
+                Gun.SetPosition(1, nearestEnemy.transform.position);
                 Ship.GetComponent<ShipStats>().Health -= Time.deltaTime * Damage;
-
             }
+
         }
         foreach (GameObject Ship in ShipsToRemove)
         {
             EnemysInRange.Remove(Ship);
+        }
+
+        if (EnemysInRange.Count == 0)
+        {
+            Gun.enabled = false;
         }
     }
 }
