@@ -233,7 +233,7 @@ public class EnemyAI : MonoBehaviour
                             {
                                 if (CurrentPlanet.GetComponent<CaptureManager>().TotalShips > 1)
                                 {
-                                    GameObject NewTargetPosition = CurrentPlanet;
+                                    GameObject NewTargetPosition = Planet;
                                     float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
                                     Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                                 }
@@ -255,7 +255,7 @@ public class EnemyAI : MonoBehaviour
             {
                 foreach (GameObject Ship in ShipsICanMove)
                 {
-                    GameObject NewTargetPosition = CurrentPlanet;
+                    GameObject NewTargetPosition = Planet;
                     float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
                     Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                 }
@@ -276,7 +276,7 @@ public class EnemyAI : MonoBehaviour
                     {
                     if (remeberme != null)
                     {
-                        GameObject NewTargetPosition = CurrentPlanet;
+                        GameObject NewTargetPosition = Planet;
                         float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
                         Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                     }
