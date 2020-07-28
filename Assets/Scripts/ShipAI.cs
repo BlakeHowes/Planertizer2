@@ -350,60 +350,41 @@ public class ShipAI : MonoBehaviour
     }
     void Orbiting()
     {
+
         distancetotarget = Vector3.Distance(target.transform.position, transform.position);
         Vector3 targetDirection = target.transform.position - transform.position;
 
-        var rotation = (targetDirection) + (UniqueSpin);
-        Vector3 RotateTowardsTargetDirection = Vector3.RotateTowards(transform.forward, rotation, TurnSpeed, 0.0f);
-        Vector3 RotateAwayFromTargetDirection = Vector3.RotateTowards(transform.forward, -rotation, TurnSpeed, 0.0f);
+        var rotation = targetDirection + UniqueSpin;
+        float sign = Mathf.Sign(Vector3.Angle(targetDirection, transform.forward) - 90);
 
-        //This Causes the ships to fly towards the target
-        if (distancetotarget > (AltitudeFromPlanet + OrbitRange))
+
+        //Towards target
+        if (distancetotarget > AltitudeFromPlanet + OrbitRange)
         {
-            transform.rotation = Quaternion.LookRotation(RotateTowardsTargetDirection);
-            rb.velocity = transform.forward * ShipSpeed;
-            TurnSpeed = turn / 6;
+            sign = 1;
+            TurnSpeed = turn / 6;   
         }
-
-
-        if (distancetotarget < (AltitudeFromPlanet + OrbitRange) && (distancetotarget > (AltitudeFromPlanet - OrbitRange)))
+        //At correct altitude
+        if (distancetotarget < AltitudeFromPlanet + OrbitRange && distancetotarget > AltitudeFromPlanet - OrbitRange)
         {
-            //this is at the correct flight Height distance
-            float angle = Vector3.Angle(targetDirection, transform.forward);
-
-            rb.velocity = transform.forward * ShipSpeed;
             TurnSpeed = turn / 15f;
-            //this circularises their movement so they fly parallel to the target
-            if (angle < 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateAwayFromTargetDirection);
-            }
-            if (angle > 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateTowardsTargetDirection);
-            }
         }
-        //this attempts to cirularise the orbit as it approches the planet to stop bouncing
-        if (distancetotarget < (AltitudeFromPlanet - OrbitRange))
+        //Approaching planet
+        if (distancetotarget < AltitudeFromPlanet - OrbitRange)
         {
-            float angle = Vector3.Angle(targetDirection, transform.forward);
-            if (angle < 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateAwayFromTargetDirection);
-            }
-            if (angle > 90)
-            {
-                transform.rotation = Quaternion.LookRotation(RotateTowardsTargetDirection);
-            }
-            rb.velocity = transform.forward * ShipSpeed;
             TurnSpeed = turn / 3;
         }
-        //this stops them crashing into the planet
+        //Anti-crash
         if (distancetotarget < AltitudeFromPlanet / 2)
         {
-            transform.rotation = Quaternion.LookRotation(RotateAwayFromTargetDirection);
+            sign = -1;
             TurnSpeed = turn;
         }
+
+        Quaternion newRotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, rotation * sign, TurnSpeed, 0.0f));
+        rb.rotation = newRotation;
+        rb.velocity = transform.forward * ShipSpeed;
+
     }
     void Chasing()
     {

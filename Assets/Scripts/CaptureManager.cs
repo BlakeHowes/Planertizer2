@@ -33,6 +33,12 @@ public class CaptureManager : MonoBehaviour
     [SerializeField]
     private bool TellEnemyAIThisIsAEnemyPlanet;
     private bool TellEnemyAIThisIsAAlliedPlanet;
+    [SerializeField]
+    private GameObject Ring;
+    private bool ChangeColourBack;
+    private bool blue;
+    private bool red;
+    private float timer2;
     void Update()
     {
         CaptureTimer += Time.deltaTime;
@@ -52,12 +58,12 @@ public class CaptureManager : MonoBehaviour
             {
                 if(CaptureTimer >= TimeTakenToCapture)
                 {
-                    var planetrenderer = GetComponent<Renderer>();
+                    var planetrenderer = Ring.GetComponent<Renderer>();
                     planetrenderer.material.color = Color.blue;
                     Captured = true;
                     NoLongerEmpty = true;
                     Spawning = 1f;
-
+                    blue = true;
                     TellEnemyAIThisIsAAlliedPlanet = true;
                 }
             }
@@ -69,12 +75,12 @@ public class CaptureManager : MonoBehaviour
             {
                 if (CaptureTimer >= TimeTakenToCapture)
                 {
-                    var planetrenderer = GetComponent<Renderer>();
+                    var planetrenderer = Ring.GetComponent<Renderer>();
                     planetrenderer.material.color = Color.red;
                     Captured = true;
                     NoLongerEmpty = true;
                     Spawning = -1f;
-
+                    red = true;
                     TellEnemyAIThisIsAEnemyPlanet = true;
                 }
             }
@@ -158,6 +164,31 @@ public class CaptureManager : MonoBehaviour
                 EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
             }
         }
+
+        if(ChangeColourBack == true)
+        {
+            timer2 += Time.deltaTime;
+            if(timer2 > 1)
+            {
+                if(blue == true)
+                {
+                    var planetrenderer = Ring.GetComponent<Renderer>();
+                    planetrenderer.material.color = Color.blue;
+                    ChangeColourBack = false;
+                }
+                if (red == true)
+                {
+                    var planetrenderer = Ring.GetComponent<Renderer>();
+                    planetrenderer.material.color = Color.red;
+                    ChangeColourBack = false;
+                }
+                if((blue != true) && (red != true))
+                {
+                    var planetrenderer = Ring.GetComponent<Renderer>();
+                    planetrenderer.material.color = Color.white;
+                }
+            }
+        }
     }
 
     //Giving planet info to EnemyAi using a collider
@@ -210,6 +241,13 @@ public class CaptureManager : MonoBehaviour
                 col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
             }
         }
+    }
+
+    public void Highlight()
+    {
+        var planetrenderer = Ring.GetComponent<Renderer>();
+        planetrenderer.material.color = Color.yellow;
+        ChangeColourBack = true;
     }
 }
 
