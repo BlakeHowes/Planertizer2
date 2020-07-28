@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1133928451017753963}
   - component: {fileID: 1133928451017753975}
   m_Layer: 9
-  m_Name: PlanetPrefab 4
+  m_Name: PlanetPrefab 5
   m_TagString: PLANET
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
   Spawnpoint: {fileID: 1133928451694133138}
   AllyShipPrefab: {fileID: 8558881987841483379, guid: eb7cac48ada5cde479de95639887ee2a,
     type: 3}
-  EnemyShipPrefab: {fileID: 1701320134130737662, guid: 44841fe4a5f94de4fb37d698c69862ba,
+  EnemyShipPrefab: {fileID: 1701320134130737662, guid: 3cdf2c339a4d45e458fbe925344d2f5b,
     type: 3}
   SpawnTimer: 0
   TellEnemyAIThisIsAEnemyPlanet: 0

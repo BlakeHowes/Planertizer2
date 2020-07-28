@@ -199,7 +199,7 @@ MonoBehaviour:
   Spawnpoint: {fileID: 1133928451694133138}
   AllyShipPrefab: {fileID: 8558881987841483379, guid: eb7cac48ada5cde479de95639887ee2a,
     type: 3}
-  EnemyShipPrefab: {fileID: 1701320134130737662, guid: 44841fe4a5f94de4fb37d698c69862ba,
+  EnemyShipPrefab: {fileID: 1701320134130737662, guid: 3cdf2c339a4d45e458fbe925344d2f5b,
     type: 3}
   SpawnTimer: 0
   TellEnemyAIThisIsAEnemyPlanet: 0
@@ -241,16 +241,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1133928451017753972}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 2bbaf367630af2e449b564204f95ae84,
-        type: 3}
-      propertyPath: m_Name
-      value: planet 6
-      objectReference: {fileID: 0}
-    - target: {fileID: -7824350364982977416, guid: 2bbaf367630af2e449b564204f95ae84,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 840fecd2f3afe13448b18986d8583448, type: 2}
     - target: {fileID: -4216859302048453862, guid: 2bbaf367630af2e449b564204f95ae84,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -321,6 +311,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: -0.016837
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2bbaf367630af2e449b564204f95ae84,
+        type: 3}
+      propertyPath: m_Name
+      value: planet 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7824350364982977416, guid: 2bbaf367630af2e449b564204f95ae84,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 840fecd2f3afe13448b18986d8583448, type: 2}
     - target: {fileID: 6355789828572602240, guid: 2bbaf367630af2e449b564204f95ae84,
         type: 3}
       propertyPath: m_LocalPosition.x

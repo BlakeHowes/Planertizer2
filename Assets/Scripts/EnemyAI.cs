@@ -69,7 +69,10 @@ public class EnemyAI : MonoBehaviour
     {
         if (Type == "MyPlanets")
         {
-            TotalEnemyPlanets.Remove(Planet);
+            if (TotalEnemyPlanets.Contains(Planet))
+            {
+                TotalEnemyPlanets.Remove(Planet);
+            }
         }
 
         if (Type == "Enemy")
