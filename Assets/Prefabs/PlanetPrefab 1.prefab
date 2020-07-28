@@ -197,6 +197,8 @@ MonoBehaviour:
   CaptureTimer: 0
   SpawnRate: 3
   Spawnpoint: {fileID: 1133928451694133138}
+  LevelManager: {fileID: 2891229259433846187, guid: 4b85cd85124fad84ea1724ad988eb409,
+    type: 3}
   AllyShipPrefab: {fileID: 8558881987841483379, guid: eb7cac48ada5cde479de95639887ee2a,
     type: 3}
   EnemyShipPrefab: {fileID: 1701320134130737662, guid: 3cdf2c339a4d45e458fbe925344d2f5b,

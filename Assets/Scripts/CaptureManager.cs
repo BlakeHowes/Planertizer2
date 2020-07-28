@@ -19,11 +19,13 @@ public class CaptureManager : MonoBehaviour
     private bool NoLongerEmpty;
     [SerializeField]
     private float CaptureTimer;
-    private float Spawning; //1 = spawn allies, -1 = spawn enemys
+    public float Spawning; //1 = spawn allies, -1 = spawn enemys
     [SerializeField]
     private float SpawnRate;
     [SerializeField]
     private GameObject Spawnpoint;
+    [SerializeField]
+    private GameObject LevelManager;
     [SerializeField]
     private GameObject AllyShipPrefab;
     [SerializeField]
@@ -39,6 +41,12 @@ public class CaptureManager : MonoBehaviour
     private bool blue;
     private bool red;
     private float timer2;
+
+    private void Awake()
+    {
+
+    }
+
     void Update()
     {
         CaptureTimer += Time.deltaTime;
@@ -82,6 +90,9 @@ public class CaptureManager : MonoBehaviour
                     Spawning = -1f;
                     red = true;
                     TellEnemyAIThisIsAEnemyPlanet = true;
+
+                   
+
                 }
             }
         }
@@ -144,6 +155,7 @@ public class CaptureManager : MonoBehaviour
             EnemyAi.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
             TellEnemyAIThisIsAEnemyPlanet = false;
 
+
             if (EnemyAi.GetComponent<EnemyAI>().NearbyEmpyPlanetsInRange.Contains(gameObject))
             {
                 Type = "Empty";
@@ -157,6 +169,8 @@ public class CaptureManager : MonoBehaviour
             GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
             EnemyAi.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
             TellEnemyAIThisIsAAlliedPlanet = false;
+
+
 
             if (EnemyAi.GetComponent<EnemyAI>().NearbyEmpyPlanetsInRange.Contains(gameObject))
             {

@@ -197,6 +197,8 @@ MonoBehaviour:
   CaptureTimer: 0
   SpawnRate: 3
   Spawnpoint: {fileID: 1133928451694133138}
+  LevelManager: {fileID: 2891229259433846187, guid: 4b85cd85124fad84ea1724ad988eb409,
+    type: 3}
   AllyShipPrefab: {fileID: 8558881987841483379, guid: eb7cac48ada5cde479de95639887ee2a,
     type: 3}
   EnemyShipPrefab: {fileID: 1701320134130737662, guid: 3cdf2c339a4d45e458fbe925344d2f5b,
@@ -241,6 +243,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1133928451017753972}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: 75090bf885890a74086b0da3bfe770f4,
+        type: 3}
+      propertyPath: m_Name
+      value: planet 2
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 75090bf885890a74086b0da3bfe770f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -310,11 +317,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.42473182
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 75090bf885890a74086b0da3bfe770f4,
-        type: 3}
-      propertyPath: m_Name
-      value: planet 2
       objectReference: {fileID: 0}
     - target: {fileID: -2882379230409994700, guid: 75090bf885890a74086b0da3bfe770f4,
         type: 3}
