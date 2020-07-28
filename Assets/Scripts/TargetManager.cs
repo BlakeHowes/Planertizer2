@@ -38,6 +38,7 @@ public class TargetManager : MonoBehaviour
                     {
                         if (hit.transform.tag == "PLANET")
                         {
+                            hit.transform.gameObject.GetComponent<CaptureManager>().Highlight();
                             GameObject NewTargetPosition = hit.transform.gameObject;
                             float Altitude = NewTargetPosition.GetComponent<CaptureManager>().Altitude + Random.Range(-0.5f, 2f);
                             Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition,Altitude);
