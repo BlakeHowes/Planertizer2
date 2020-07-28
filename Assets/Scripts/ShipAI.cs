@@ -116,27 +116,31 @@ public class ShipAI : MonoBehaviour
                     EnemysInRange.Add(collider.attachedRigidbody.gameObject);
                 }
             }
-
-            if (collider.tag == ("PLANET"))
+            if (collider != null)
             {
-                if(IsRegistered == false)
+                if (collider.tag == ("PLANET"))
                 {
-                    if (WhatIAttack == "ENEMY")
+                    if (IsRegistered == false)
                     {
-                        CurrentPlanet = collider.gameObject;
-                        collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
-                    }
+                        if (WhatIAttack == "ENEMY")
+                        {
+                            CurrentPlanet = collider.gameObject;
+                            collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
+                        }
 
-                    if (WhatIAttack == "ALLIES")
-                    {
-                        CurrentPlanet = collider.gameObject;
-                        collider.GetComponent<CaptureManager>().CaptureFunction -= 1f;
-                    }
+                        if (WhatIAttack == "ALLIES")
+                        {
+                            CurrentPlanet = collider.gameObject;
+                            collider.GetComponent<CaptureManager>().CaptureFunction -= 1f;
+                        }
 
-                    collider.GetComponent<CaptureManager>().TotalShips += 1f;
-                    IsRegistered = true;
+                        collider.GetComponent<CaptureManager>().TotalShips += 1f;
+                        IsRegistered = true;
+                    }
                 }
             }
+
+           
 
             if(collider.tag == "ENEMYAI")
             {

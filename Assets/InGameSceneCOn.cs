@@ -21,14 +21,17 @@ public class InGameSceneCOn : MonoBehaviour
         {
             foreach (GameObject Planet in PlanetScore)
             {
-                if (Planet.GetComponent<CaptureManager>().Spawning == 1)
+                if (Planet.GetComponent<CaptureManager>() != null)
                 {
-                    controlfunction += 1;
-                }
+                    if (Planet.GetComponent<CaptureManager>().Spawning == 1)
+                    {
+                        controlfunction += 1;
+                    }
 
-                if (Planet.GetComponent<CaptureManager>().Spawning == -1)
-                {
-                    controlfunction += -1;
+                    if (Planet.GetComponent<CaptureManager>().Spawning == -1)
+                    {
+                        controlfunction += -1;
+                    }
                 }
             }
 

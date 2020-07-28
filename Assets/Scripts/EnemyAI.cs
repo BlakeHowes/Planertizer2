@@ -240,10 +240,6 @@ public class EnemyAI : MonoBehaviour
 
     void Attack()
     {
-        if (i > TotalEnemyPlanets.Count)
-        {
-            remeberme = TotalEnemyPlanets[i - 1];
-        }
         foreach (GameObject Planet in AlliedPlanetsInRange)
         {
             if (ShipsICanMove.Count > Planet.GetComponent<CaptureManager>().TotalShips)

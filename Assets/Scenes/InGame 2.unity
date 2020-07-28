@@ -3557,7 +3557,6 @@ GameObject:
   - component: {fileID: 1133928452000882585}
   - component: {fileID: 1133928452000882566}
   - component: {fileID: 1133928452000882567}
-  - component: {fileID: 1133928452000882587}
   m_Layer: 9
   m_Name: PlanetPrefab
   m_TagString: PLANET
@@ -3640,36 +3639,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133928452000882564}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1133928452000882587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133928452000882564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ccd7e06f0627f543ae8fb367492f23f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Altitude: 6
-  MaxShipNumber: 40
-  CaptureFunction: 0
-  TotalShips: 0
-  TimeTakenToCapture: 3
-  AmICaptured: 0
-  CaptureTimer: 0
-  Spawning: 0
-  SpawnRate: 3
-  Spawnpoint: {fileID: 1133928450793940350}
-  LevelManager: {fileID: 0}
-  AllyShipPrefab: {fileID: 8558881987841483379, guid: eb7cac48ada5cde479de95639887ee2a,
-    type: 3}
-  EnemyShipPrefab: {fileID: 1701320134130737662, guid: 44841fe4a5f94de4fb37d698c69862ba,
-    type: 3}
-  SpawnTimer: 0
-  TellEnemyAIThisIsAEnemyPlanet: 0
-  Ring: {fileID: 0}
 --- !u!1001 &9159130915128955386
 PrefabInstance:
   m_ObjectHideFlags: 0
