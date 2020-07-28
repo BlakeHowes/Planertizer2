@@ -44,6 +44,13 @@ public class TargetManager : MonoBehaviour
                             Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition,Altitude);
                         }
 
+                        if(hit.transform.tag == "OBJECT")
+                        {
+                            GameObject NewTargetPosition = hit.transform.gameObject;
+                            float Altitude = NewTargetPosition.transform.localScale.x + Random.Range(-0.5f, 2f);
+                            Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
+                        }
+
                         if (hit.transform.tag == "SPACE")
                         {
                             Vector3 pos = hit.point;

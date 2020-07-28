@@ -9,6 +9,7 @@ TagManager:
   - PLANET
   - ENEMYAI
   - SPACE
+  - OBJECT
   layers:
   - Default
   - TransparentFX

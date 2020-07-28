@@ -117,18 +117,6 @@ public class EnemyAI : MonoBehaviour
         TurnTimer += Time.deltaTime;
         if (TurnTimer >= AiSpeed)
         {
-            if (AlliedPlanetsInRange.Count > 0)
-            {
-                if(i > 0)
-                {
-                    ifixed = i - 1;
-                    if (ifixed < TotalEnemyPlanets.Count)
-                    {
-                        remeberme = TotalEnemyPlanets[ifixed];
-                    }
-
-                }
-            }
 
             if (i >= TotalEnemyPlanets.Count)
             {
@@ -251,6 +239,10 @@ public class EnemyAI : MonoBehaviour
 
     void Attack()
     {
+        if (i > TotalEnemyPlanets.Count)
+        {
+            remeberme = TotalEnemyPlanets[i - 1];
+        }
         foreach (GameObject Planet in AlliedPlanetsInRange)
         {
             if (ShipsICanMove.Count > Planet.GetComponent<CaptureManager>().TotalShips)

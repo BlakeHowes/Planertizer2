@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3da77824f0654f4ab8e8694efdbfb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 1300
+  Health: 1700
   MaxHealth: 10
   RegenSpeed: 0.1
   AmIATurret: 0
@@ -232,7 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701320134130737663}
   m_Layer: 0
-  m_Name: EnemyShipPrefab
+  m_Name: EnemyShipPrefab2
   m_TagString: ENEMY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
