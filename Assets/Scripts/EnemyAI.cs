@@ -153,6 +153,7 @@ public class EnemyAI : MonoBehaviour
 
                 {
                     DefendPlanet();
+                    remeberme = Planet;
                 }
 
                 DecideWhatToDo();
