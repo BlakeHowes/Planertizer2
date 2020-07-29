@@ -21,7 +21,10 @@ public class ShipAI : MonoBehaviour
     [SerializeField]
     private string WhatIAttack; //"ENEMY" for allied ships and "ALLIES" for enemys
     [SerializeField]
-    private GameObject ShipMesh;
+    private GameObject ShipMesh1;
+    [SerializeField]
+    private GameObject ShipMesh2;
+
     /*
     [SerializeField]
     private float persuitRange;
@@ -77,15 +80,17 @@ public class ShipAI : MonoBehaviour
         Gun.SetPosition(0, transform.position);
         Gun.SetPosition(1, transform.position);
 
+        float randomizer = Random.Range(0, 2);
+
         if (WhatIAttack == "ENEMY")
         {
-            Renderer rend = ShipMesh.GetComponent<Renderer>();
+            Renderer rend = ShipMesh1.GetComponent<Renderer>();
             rend.material.color = AllyColor;
         }
 
         if (WhatIAttack == "ALLIES")
         {
-            Renderer rend = ShipMesh.GetComponent<Renderer>();
+            Renderer rend = ShipMesh1.GetComponent<Renderer>();
             rend.material.color = EnemyColor;
         }
 
@@ -253,13 +258,13 @@ public class ShipAI : MonoBehaviour
 
     public void Highlight()
     {
-        Renderer rend = ShipMesh.GetComponent<Renderer>();
+        Renderer rend = ShipMesh1.GetComponent<Renderer>();
         rend.material.color = Color.yellow;
     }
 
     public void RemoveHighlight()
     {
-        Renderer rend = ShipMesh.GetComponent<Renderer>();
+        Renderer rend = ShipMesh1.GetComponent<Renderer>();
         rend.material.color = AllyColor;
     }
 

@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6c89df3781bec40874d26073740f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseRandomShip: 0
   ShipSpeed: 3
   HeightMultiplyer: 1
   AltitudeFromPlanet: 6
@@ -180,7 +181,8 @@ MonoBehaviour:
   OrbitRange: 0.4
   Damage: 2
   WhatIAttack: ALLIES
-  ShipMesh: {fileID: 5606695910494565456}
+  ShipMesh1: {fileID: 5606695910494565456}
+  ShipMesh2: {fileID: 5606695910494565456}
   AllyColor: {r: 0, g: 0, b: 0, a: 0}
   EnemyColor: {r: 1, g: 0.25, b: 0.25, a: 0}
   target: {fileID: 1701320132973049671}
@@ -231,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701320134130737663}
   m_Layer: 0
-  m_Name: EnemyShipPrefab 1
+  m_Name: EnemyShipPrefab
   m_TagString: ENEMY
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,6 +389,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1701320133889645639}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
+        type: 3}
+      propertyPath: m_Name
+      value: Alien ship 2
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -462,11 +469,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8c61ba64d0cc7e14b8e02728d257b5a6, type: 2}
-    - target: {fileID: -927199367670048503, guid: c7d44ba7ed8cfe14685857d3fe37fbee,
-        type: 3}
-      propertyPath: m_Name
-      value: Alien ship 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d44ba7ed8cfe14685857d3fe37fbee, type: 3}
 --- !u!1 &5606695910494565456 stripped

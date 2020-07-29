@@ -417,7 +417,8 @@ MonoBehaviour:
   OrbitRange: 0.4
   Damage: 2
   WhatIAttack: ENEMY
-  ShipMesh: {fileID: 8558881988587291733}
+  ShipMesh1: {fileID: 8558881988587291733}
+  ShipMesh2: {fileID: 0}
   AllyColor: {r: 0.25, g: 0.49411768, b: 1, a: 0}
   EnemyColor: {r: 0, g: 0, b: 0, a: 0}
   target: {fileID: 8558881988616480639}

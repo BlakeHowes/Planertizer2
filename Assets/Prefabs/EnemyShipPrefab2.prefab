@@ -174,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6c89df3781bec40874d26073740f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseRandomShip: 0
   ShipSpeed: 2
   HeightMultiplyer: 3
   AltitudeFromPlanet: 6
@@ -181,7 +182,8 @@ MonoBehaviour:
   OrbitRange: 0.4
   Damage: 2
   WhatIAttack: ALLIES
-  ShipMesh: {fileID: 918762064347327118}
+  ShipMesh1: {fileID: 918762064347327118}
+  ShipMesh2: {fileID: 918762064347327118}
   AllyColor: {r: 0, g: 0, b: 0, a: 0}
   EnemyColor: {r: 1, g: 0.25, b: 0.25, a: 0}
   target: {fileID: 1701320132973049671}
@@ -204,7 +206,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.68
+  m_Radius: 1.54
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1701320133889645632
 MonoBehaviour:
@@ -523,7 +525,7 @@ GameObject:
   - component: {fileID: 7652432859602419868}
   m_Layer: 0
   m_Name: TurretPrefab
-  m_TagString: ENEMY
+  m_TagString: OBJECT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
