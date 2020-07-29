@@ -3878,7 +3878,7 @@ PrefabInstance:
     - target: {fileID: 9159130915030187309, guid: ae12748c6fa2a4541982443b4c54712b,
         type: 3}
       propertyPath: m_Radius
-      value: 36.48
+      value: 19.61
       objectReference: {fileID: 0}
     - target: {fileID: 9159130915030187311, guid: ae12748c6fa2a4541982443b4c54712b,
         type: 3}
@@ -3903,7 +3903,7 @@ PrefabInstance:
     - target: {fileID: 9159130915030187311, guid: ae12748c6fa2a4541982443b4c54712b,
         type: 3}
       propertyPath: DefensiveFactor
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9159130915030187311, guid: ae12748c6fa2a4541982443b4c54712b,
         type: 3}

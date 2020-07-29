@@ -59,6 +59,8 @@ public class ShipAI : MonoBehaviour
     private float AltitudeTemp;
     [SerializeField]
     private LayerMask layermask;
+    private bool attackingplanet;
+    private GameObject PlanetToAttack;
 
 
 
@@ -134,12 +136,22 @@ public class ShipAI : MonoBehaviour
                         {
                             CurrentPlanet = collider.gameObject;
                             collider.GetComponent<CaptureManager>().CaptureFunction += 1f;
+                            if(collider.GetComponent<CaptureManager>().AmICaptured != 1 &&(EnemysInRange.Count == 0))
+                            {
+                                attackingplanet = true;
+                                PlanetToAttack = collider.transform.gameObject;
+                            }
                         }
 
                         if (WhatIAttack == "ALLIES")
                         {
                             CurrentPlanet = collider.gameObject;
                             collider.GetComponent<CaptureManager>().CaptureFunction -= 1f;
+                            if (collider.GetComponent<CaptureManager>().AmICaptured != -1 && (EnemysInRange.Count == 0))
+                            {
+                                attackingplanet = true;
+                                PlanetToAttack = collider.transform.gameObject;
+                            }
                         }
 
                         collider.GetComponent<CaptureManager>().TotalShips += 1f;
@@ -308,10 +320,26 @@ public class ShipAI : MonoBehaviour
             EnemysInRange.Remove(Ship);
         }
 
-        if (EnemysInRange.Count == 0)
+        if ((EnemysInRange.Count == 0) &&(attackingplanet == false))
         {
             Gun.SetPosition(0, transform.position);
             Gun.SetPosition(1, transform.position);
+        }
+
+        if(attackingplanet == true)
+        {
+            Gun.SetPosition(0, gunstartpos.transform.position);
+            Gun.SetPosition(1, PlanetToAttack.transform.position);
+
+            if ((PlanetToAttack.GetComponent<CaptureManager>().AmICaptured == 1) && (WhatIAttack == "ENEMY"))
+            {
+                attackingplanet = false;
+            }
+
+            if ((PlanetToAttack.GetComponent<CaptureManager>().AmICaptured == -1) &&(WhatIAttack == "ALLIES"))
+            {
+                attackingplanet = false;
+            }
         }
 
         if (search == true) // Search function if ray didnt hit target
