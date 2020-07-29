@@ -185,6 +185,7 @@ public class ShipAI : MonoBehaviour
         }
         if (collider.tag == ("PLANET"))
         {
+            attackingplanet = false;
             CurrentPlanet = null;
             if (WhatIAttack == "ENEMY")
             {
@@ -331,12 +332,12 @@ public class ShipAI : MonoBehaviour
             Gun.SetPosition(0, gunstartpos.transform.position);
             Gun.SetPosition(1, PlanetToAttack.transform.position);
 
-            if ((PlanetToAttack.GetComponent<CaptureManager>().AmICaptured == 1) && (WhatIAttack == "ENEMY"))
+            if ((PlanetToAttack.GetComponent<CaptureManager>().blue == true) && (WhatIAttack == "ENEMY"))
             {
                 attackingplanet = false;
             }
 
-            if ((PlanetToAttack.GetComponent<CaptureManager>().AmICaptured == -1) &&(WhatIAttack == "ALLIES"))
+            if ((PlanetToAttack.GetComponent<CaptureManager>().red == true) &&(WhatIAttack == "ALLIES"))
             {
                 attackingplanet = false;
             }

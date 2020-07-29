@@ -41,8 +41,8 @@ public class CaptureManager : MonoBehaviour
     private GameObject Ring2;
 
     private bool ChangeColourBack;
-    private bool blue;
-    private bool red;
+    public bool blue;
+    public bool red;
     private float timer2;
 
     private void Awake()

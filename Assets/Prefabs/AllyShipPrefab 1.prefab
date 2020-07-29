@@ -738,7 +738,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20.06
+  m_Radius: 14.9
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6104010130932291866
 MonoBehaviour:
@@ -849,7 +849,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20.06
+  m_Radius: 14.9
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2133717377441871152
 MonoBehaviour:
@@ -960,7 +960,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20.06
+  m_Radius: 14.9
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &198238910815761556
 MonoBehaviour:
@@ -1198,7 +1198,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20.06
+  m_Radius: 14.9
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5878136884734613325
 MonoBehaviour:
@@ -1525,7 +1525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6c89df3781bec40874d26073740f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseRandomShip: 0
   ShipSpeed: 4
   HeightMultiplyer: 2
   AltitudeFromPlanet: 6
