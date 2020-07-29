@@ -17,7 +17,7 @@ public class InGameSceneCOn : MonoBehaviour
     public void Update()
     {
         checktimer += Time.deltaTime;
-        if(checktimer > 5)
+        if (checktimer > 5)
         {
             foreach (GameObject Planet in PlanetScore)
             {
@@ -40,7 +40,7 @@ public class InGameSceneCOn : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
 
-            if ((controlfunction* -1) == PlanetScore.Count)
+            if ((controlfunction * -1) == PlanetScore.Count)
             {
                 SceneManager.LoadScene("MainMenu");
             }

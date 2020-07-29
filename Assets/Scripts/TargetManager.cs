@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class TargetManager : MonoBehaviour
 {
     private Transform target;
@@ -115,5 +115,21 @@ public class TargetManager : MonoBehaviour
         }
 
         SelectedShips.Clear();
+    }
+
+    public void resume()
+    {
+        paused = !paused;
+    }
+
+    public void MainMenu1()
+    {
+        paused = !paused;
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

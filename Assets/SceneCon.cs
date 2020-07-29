@@ -54,7 +54,7 @@ public class SceneCon : MonoBehaviour
         if (startbutton == true)
         {
             startbutton = false;
-            SceneManager.LoadScene("InGame 1");
+            SceneManager.LoadScene("InGame");
         }
 
         
