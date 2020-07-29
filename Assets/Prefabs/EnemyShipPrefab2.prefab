@@ -174,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6c89df3781bec40874d26073740f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseRandomShip: 0
   ShipSpeed: 2
   HeightMultiplyer: 3
   AltitudeFromPlanet: 6
@@ -602,7 +601,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 9.52
+  m_Radius: 5.06
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7652432859602419868
 MonoBehaviour:
@@ -618,7 +617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhatIAttack: ALLIES
   Gun: {fileID: 3836740210411962378}
-  Damage: 10
+  Damage: 5
   EnemysInRange: []
   other: {fileID: 7652432859602419871}
 --- !u!1001 &9214914785085862791

@@ -322,6 +322,41 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 11.39
       objectReference: {fileID: 0}
+    - target: {fileID: 2679041099769166877, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1085152287}
+    - target: {fileID: 2679041099769166877, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 2679041099857529849, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2679041099857529848, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1085152287}
+    - target: {fileID: 2679041099857529848, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resume
+      objectReference: {fileID: 0}
+    - target: {fileID: 2679041101252784864, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1085152287}
+    - target: {fileID: 2679041101252784864, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MainMenu1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1803f44ecd7dd5e419ee3ff93fa5a33b, type: 3}
 --- !u!212 &395731720 stripped

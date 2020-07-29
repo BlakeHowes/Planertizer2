@@ -91,7 +91,10 @@ public class ShipAI : MonoBehaviour
         if (WhatIAttack == "ALLIES")
         {
             Renderer rend = ShipMesh1.GetComponent<Renderer>();
-            rend.material.color = EnemyColor;
+            if (rend != null)
+            {
+                rend.material.color = EnemyColor;
+            }
         }
 
         
