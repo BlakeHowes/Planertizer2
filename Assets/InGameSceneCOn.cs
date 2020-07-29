@@ -42,7 +42,7 @@ public class InGameSceneCOn : MonoBehaviour
 
             if ((controlfunction* -1) == PlanetScore.Count)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene("MainMenu");
             }
 
             controlfunction = 0;
