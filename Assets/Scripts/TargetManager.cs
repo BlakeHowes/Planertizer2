@@ -11,6 +11,24 @@ public class TargetManager : MonoBehaviour
     [SerializeField]
     private LayerMask layermask;
     private bool paused;
+    [SerializeField]
+    private SpriteRenderer PauseMenu;
+    [SerializeField]
+    private SpriteRenderer ResumeMenu;
+    [SerializeField]
+    private SpriteRenderer MainMenu;
+    [SerializeField]
+    private SpriteRenderer ExitMenu;
+    [SerializeField]
+    private Canvas Buttons;
+    private void Awake()
+    {
+        PauseMenu.enabled = false;
+        ResumeMenu.enabled = false;
+        MainMenu.enabled = false;
+        ExitMenu.enabled = false;
+        Buttons.enabled = false;
+    }
     void Update()
     {
         foreach (GameObject Ship in SelectedShips)
@@ -70,11 +88,21 @@ public class TargetManager : MonoBehaviour
         if(paused == true)
         {
             Time.timeScale = 0f;
+            PauseMenu.enabled = true;
+            ResumeMenu.enabled = true;
+            MainMenu.enabled = true;
+            ExitMenu.enabled = true;
+            Buttons.enabled = true;
         }
 
         if (paused == false)
         {
             Time.timeScale = 1f;
+            PauseMenu.enabled = false;
+            ResumeMenu.enabled = false;
+            MainMenu.enabled = false;
+            ExitMenu.enabled = false;
+            Buttons.enabled = false;
         }
 
         ShipsToRemove.Clear();
