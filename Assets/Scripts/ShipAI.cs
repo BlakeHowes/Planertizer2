@@ -245,8 +245,11 @@ public class ShipAI : MonoBehaviour
                     {
                         AltitudeFromPlanet = hit.transform.gameObject.GetComponent<CaptureManager>().Altitude * HeightMultiplyer;
                     }
-
-                    search = true;
+                    if (hit.transform.tag == "OBJECT")
+                    {
+                        AltitudeFromPlanet = hit.transform.gameObject.transform.localScale.x + 6f + Random.Range(-0.5f, 2f);
+                    }
+                        search = true;
                 }
             }
         }
