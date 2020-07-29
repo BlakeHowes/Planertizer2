@@ -145,7 +145,6 @@ public class EnemyAI : MonoBehaviour
                     remeberme = null;
                 }
             }
-
             foreach (GameObject Planet in TotalEnemyPlanets)
             {
                 CurrentPlanet = Planet;
@@ -153,6 +152,7 @@ public class EnemyAI : MonoBehaviour
 
                 {
                     DefendPlanet();
+                    remeberme = Planet;
                 }
 
                 DecideWhatToDo();
