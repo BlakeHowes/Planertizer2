@@ -52,7 +52,7 @@ public class CaptureManager : MonoBehaviour
 
     void Update()
     {
-        CaptureTimer += Time.deltaTime + (TotalShips/100);
+        
 
         if (TotalShips > 0f)
         {
@@ -66,6 +66,7 @@ public class CaptureManager : MonoBehaviour
 
         if (AmICaptured >= 1)
         {
+            CaptureTimer += Time.deltaTime + (TotalShips / 100);
             if (Captured == false)
             {
                 if(CaptureTimer >= TimeTakenToCapture)
@@ -89,6 +90,7 @@ public class CaptureManager : MonoBehaviour
 
         if (AmICaptured <= -1)
         {
+            CaptureTimer += Time.deltaTime + (TotalShips / 100);
             if (Captured == false)
             {
                 if (CaptureTimer >= TimeTakenToCapture - TotalShips)
@@ -118,7 +120,12 @@ public class CaptureManager : MonoBehaviour
             Captured = false;
         }
 
-        if(Spawning >= 1f)
+        if((red == true) || (blue == false))
+        {
+            CaptureTimer += Time.deltaTime + (TotalShips / 100);
+        }
+
+        if (Spawning >= 1f)
         {
             SpawnTimer += Time.deltaTime;
             if (TotalShips <= MaxShipNumber)
@@ -128,6 +135,14 @@ public class CaptureManager : MonoBehaviour
                     Instantiate(AllyShipPrefab, Spawnpoint.transform.position, new Quaternion());
                     SpawnTimer = 0f;
                 }
+            }
+
+            if ((CaptureFunction < 0))
+            {
+                Spawning = 0f;
+                SpawnTimer = 0f;
+                Captured = false;
+                CaptureTimer = 0;
             }
         }
 
@@ -141,6 +156,14 @@ public class CaptureManager : MonoBehaviour
                     Instantiate(EnemyShipPrefab, Spawnpoint.transform.position, new Quaternion());
                     SpawnTimer = 0f;
                 }
+            }
+
+            if ((CaptureFunction > 0))
+            {
+                Spawning = 0f;
+                SpawnTimer = 0f;
+                Captured = false;
+                CaptureTimer = 0;
             }
         }
 
