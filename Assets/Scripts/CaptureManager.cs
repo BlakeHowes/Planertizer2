@@ -64,7 +64,7 @@ public class CaptureManager : MonoBehaviour
             AmICaptured = 0f;
         }
 
-        if (AmICaptured == 1)
+        if (AmICaptured >= 1)
         {
             if (Captured == false)
             {
@@ -87,7 +87,7 @@ public class CaptureManager : MonoBehaviour
             }
         }
 
-        if (AmICaptured == -1)
+        if (AmICaptured <= -1)
         {
             if (Captured == false)
             {
@@ -111,32 +111,14 @@ public class CaptureManager : MonoBehaviour
             }
         }
 
-        if((AmICaptured > -1) && (AmICaptured < 0))
+        if((red == false)&&(blue == false))
         {
             Spawning = 0f;
             SpawnTimer = 0f;
-        }
-
-
-        if ((AmICaptured > 0) && (AmICaptured < 1))
-        {
-            Spawning = 0f;
-            SpawnTimer = 0f;
-        }
-
-        if ((AmICaptured != 1) & (AmICaptured >= 0))
-        {
-            CaptureTimer = 0f;
             Captured = false;
         }
 
-        if ((AmICaptured != -1) & (AmICaptured < 0))
-        {
-            CaptureTimer = 0f;
-            Captured = false;
-        }
-
-        if(Spawning == 1f)
+        if(Spawning >= 1f)
         {
             SpawnTimer += Time.deltaTime;
             if (TotalShips <= MaxShipNumber)
@@ -149,7 +131,7 @@ public class CaptureManager : MonoBehaviour
             }
         }
 
-        if (Spawning == -1f)
+        if (Spawning <= -1f)
         {
             SpawnTimer += Time.deltaTime;
             if (TotalShips <= MaxShipNumber)
@@ -241,7 +223,7 @@ public class CaptureManager : MonoBehaviour
     {
         if (col.tag == "ENEMYAI")
         {
-            if (AmICaptured == -1)
+            if (AmICaptured <= -1)
             {
                 string Type = "Enemy";
                 col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
@@ -253,7 +235,7 @@ public class CaptureManager : MonoBehaviour
                 col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
             }
 
-            if (AmICaptured == 1)
+            if (AmICaptured >= 1)
             {
                 string Type = "Allied";
                 col.GetComponent<EnemyAI>().AddPlanet(gameObject, Type);
@@ -265,7 +247,7 @@ public class CaptureManager : MonoBehaviour
     {
         if (col.tag == "ENEMYAI")
         {
-            if (AmICaptured == -1)
+            if (AmICaptured <= -1)
             {
                 string Type = "Enemy";
                 col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
@@ -280,7 +262,7 @@ public class CaptureManager : MonoBehaviour
                 }
             }
 
-            if (AmICaptured == 1)
+            if (AmICaptured >= 1)
             {
                 string Type = "Allied";
                 col.GetComponent<EnemyAI>().RemovePlanet(gameObject, Type);
