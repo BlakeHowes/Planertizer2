@@ -37,6 +37,9 @@ public class CaptureManager : MonoBehaviour
     private bool TellEnemyAIThisIsAAlliedPlanet;
     [SerializeField]
     private GameObject Ring;
+    [SerializeField]
+    private GameObject Ring2;
+
     private bool ChangeColourBack;
     private bool blue;
     private bool red;
@@ -44,12 +47,13 @@ public class CaptureManager : MonoBehaviour
 
     private void Awake()
     {
-
+        TimeTakenToCapture = 15;
     }
 
     void Update()
     {
-        CaptureTimer += Time.deltaTime;
+        CaptureTimer += Time.deltaTime + (TotalShips/100);
+
         if (TotalShips > 0f)
         {
             AmICaptured = CaptureFunction / TotalShips;
@@ -73,6 +77,12 @@ public class CaptureManager : MonoBehaviour
                     Spawning = 1f;
                     blue = true;
                     TellEnemyAIThisIsAAlliedPlanet = true;
+
+                    if (Ring2 != null)
+                    {
+                        planetrenderer = Ring2.GetComponent<Renderer>();
+                        planetrenderer.material.color = Color.blue;
+                    }
                 }
             }
         }
@@ -81,7 +91,7 @@ public class CaptureManager : MonoBehaviour
         {
             if (Captured == false)
             {
-                if (CaptureTimer >= TimeTakenToCapture)
+                if (CaptureTimer >= TimeTakenToCapture - TotalShips)
                 {
                     var planetrenderer = Ring.GetComponent<Renderer>();
                     planetrenderer.material.color = Color.red;
@@ -91,7 +101,11 @@ public class CaptureManager : MonoBehaviour
                     red = true;
                     TellEnemyAIThisIsAEnemyPlanet = true;
 
-                   
+                    if (Ring2 != null)
+                    {
+                        planetrenderer = Ring2.GetComponent<Renderer>();
+                        planetrenderer.material.color = Color.red;
+                    }
 
                 }
             }
@@ -188,6 +202,11 @@ public class CaptureManager : MonoBehaviour
                 {
                     var planetrenderer = Ring.GetComponent<Renderer>();
                     planetrenderer.material.color = Color.blue;
+                    if(Ring2 != null)
+                    {
+                        planetrenderer = Ring2.GetComponent<Renderer>();
+                        planetrenderer.material.color = Color.blue;
+                    }
                     ChangeColourBack = false;
                 }
                 if (red == true)
@@ -195,11 +214,23 @@ public class CaptureManager : MonoBehaviour
                     var planetrenderer = Ring.GetComponent<Renderer>();
                     planetrenderer.material.color = Color.red;
                     ChangeColourBack = false;
+
+                    if (Ring2 != null)
+                    {
+                        planetrenderer = Ring2.GetComponent<Renderer>();
+                        planetrenderer.material.color = Color.red;
+                    }
                 }
                 if((blue != true) && (red != true))
                 {
                     var planetrenderer = Ring.GetComponent<Renderer>();
                     planetrenderer.material.color = Color.white;
+
+                    if (Ring2 != null)
+                    {
+                        planetrenderer = Ring2.GetComponent<Renderer>();
+                        planetrenderer.material.color = Color.white;
+                    }
                 }
             }
         }
@@ -262,6 +293,13 @@ public class CaptureManager : MonoBehaviour
         var planetrenderer = Ring.GetComponent<Renderer>();
         planetrenderer.material.color = Color.yellow;
         ChangeColourBack = true;
+
+        if (Ring2 != null)
+        {
+            planetrenderer = Ring2.GetComponent<Renderer>();
+            planetrenderer.material.color = Color.yellow;
+        }
+
         timer2 = 0f;
     }
 }

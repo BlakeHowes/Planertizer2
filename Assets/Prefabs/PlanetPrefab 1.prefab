@@ -192,9 +192,10 @@ MonoBehaviour:
   MaxShipNumber: 40
   CaptureFunction: 0
   TotalShips: 0
-  TimeTakenToCapture: 3
+  TimeTakenToCapture: 6
   AmICaptured: 0
   CaptureTimer: 0
+  Spawning: 0
   SpawnRate: 3
   Spawnpoint: {fileID: 1133928451694133138}
   LevelManager: {fileID: 2891229259433846187, guid: 4b85cd85124fad84ea1724ad988eb409,

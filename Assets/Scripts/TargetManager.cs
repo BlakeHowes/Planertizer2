@@ -12,25 +12,30 @@ public class TargetManager : MonoBehaviour
     private LayerMask layermask;
     private bool paused;
     [SerializeField]
-    private SpriteRenderer PauseMenu;
+    private GameObject Buttons;
     [SerializeField]
-    private SpriteRenderer ResumeMenu;
-    [SerializeField]
-    private SpriteRenderer MainMenu;
-    [SerializeField]
-    private SpriteRenderer ExitMenu;
-    [SerializeField]
-    private Canvas Buttons;
+    private GameObject targetring;
+    private bool removering;
+    private float ringtimer;
+
     private void Awake()
     {
-        PauseMenu.enabled = false;
-        ResumeMenu.enabled = false;
-        MainMenu.enabled = false;
-        ExitMenu.enabled = false;
-        Buttons.enabled = false;
+        targetring.SetActive(false);
+        Buttons.SetActive(false);
     }
     void Update()
     {
+        if(removering == true)
+        {
+            ringtimer += Time.deltaTime;
+            if(ringtimer > 1)
+            {
+                removering = false;
+                targetring.SetActive(false);
+                ringtimer = 0;
+            }
+        }
+
         foreach (GameObject Ship in SelectedShips)
         {
             if (Ship == null)
@@ -65,7 +70,7 @@ public class TargetManager : MonoBehaviour
                         if(hit.transform.tag == "OBJECT")
                         {
                             GameObject NewTargetPosition = hit.transform.gameObject;
-                            float Altitude = NewTargetPosition.transform.localScale.x + Random.Range(-0.5f, 2f);
+                            float Altitude = NewTargetPosition.transform.localScale.x + 6f + Random.Range(-0.5f, 2f);
                             Ship.GetComponent<ShipAI>().MoveTarget(NewTargetPosition, Altitude);
                         }
 
@@ -74,6 +79,10 @@ public class TargetManager : MonoBehaviour
                             Vector3 pos = hit.point;
                             float Altitude = 1 + Random.Range(-0.5f, 10f);
                             Ship.GetComponent<ShipAI>().MoveTargetToSpace(pos, Altitude);
+
+                            targetring.SetActive(true);
+                            targetring.transform.position = hit.point;
+                            removering = true;
                         }
                     }
                 }
@@ -88,21 +97,13 @@ public class TargetManager : MonoBehaviour
         if(paused == true)
         {
             Time.timeScale = 0f;
-            PauseMenu.enabled = true;
-            ResumeMenu.enabled = true;
-            MainMenu.enabled = true;
-            ExitMenu.enabled = true;
-            Buttons.enabled = true;
+            Buttons.SetActive(true);
         }
 
         if (paused == false)
         {
             Time.timeScale = 1f;
-            PauseMenu.enabled = false;
-            ResumeMenu.enabled = false;
-            MainMenu.enabled = false;
-            ExitMenu.enabled = false;
-            Buttons.enabled = false;
+            Buttons.SetActive(false);
         }
 
         ShipsToRemove.Clear();
@@ -119,7 +120,7 @@ public class TargetManager : MonoBehaviour
 
     public void resume()
     {
-        paused = !paused;
+        paused = false;
     }
 
     public void MainMenu1()
