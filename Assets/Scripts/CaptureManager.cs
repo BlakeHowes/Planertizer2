@@ -262,6 +262,7 @@ public class CaptureManager : MonoBehaviour
         var planetrenderer = Ring.GetComponent<Renderer>();
         planetrenderer.material.color = Color.yellow;
         ChangeColourBack = true;
+        timer2 = 0f;
     }
 }
 
