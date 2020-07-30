@@ -120,9 +120,9 @@ public class CaptureManager : MonoBehaviour
             Captured = false;
         }
 
-        if((red == true) || (blue == false))
+        if((red == true) || (blue == true))
         {
-            CaptureTimer += Time.deltaTime + (TotalShips / 100);
+            CaptureTimer += Time.deltaTime + (TotalShips / 1000);
         }
 
         if (Spawning >= 1f)

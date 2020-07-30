@@ -10,35 +10,22 @@ public class ShipStats : MonoBehaviour
     private float MaxHealth;
     [SerializeField]
     private float RegenSpeed;
-    [SerializeField]
-    private bool AmIATurret;
-    void OnEnable()
-    {
-        
-    }
 
     void Update()
     {
-        if(Health <= MaxHealth)
+        if (Health <= MaxHealth)
         {
-            Health += Time.deltaTime * RegenSpeed/10f;
+            Health += Time.deltaTime * RegenSpeed / 10f;
         }
-        if(this != null)
-        {
-            if (Health < 0f)
-            {
-                if (AmIATurret == false)
-                {
-                    GetComponent<ShipAI>().RemoveFromPlanet();
-                    GameObject EnemyAi = GameObject.FindGameObjectWithTag("ENEMYAI");
-                    if (EnemyAi.GetComponent<EnemyAI>().ShipsICanMove.Contains(gameObject))
-                    {
-                        EnemyAi.GetComponent<EnemyAI>().RemoveShip(gameObject);
-                    }
-                }
 
-                Destroy(gameObject);
-            }
+        if (Health < 0f)
+        {
+            Destroy(gameObject);
         }
+    }
+
+    public void RemoveHealth(float Damage)
+    {
+        Health -= Damage;
     }
 }
