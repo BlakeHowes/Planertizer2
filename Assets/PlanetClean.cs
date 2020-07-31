@@ -9,21 +9,6 @@ public class PlanetClean : MonoBehaviour
     [SerializeField]
     private GameObject Ring;
 
-    void Update()
-    {
-        TakeOverCheck();
-
-        if(TakeOverCheck() == true)
-        {
-            Dictionary<int, int> SubTeamList = new Dictionary<int, int>();
-            Collider[] AirSpace = Physics.OverlapSphere(transform.position, radius);
-            foreach (var Ship in AirSpace)
-            {
-              
-            }
-        }
-    }
-
     private bool TakeOverCheck()
     {
         int FirstTeamFound = -1;
@@ -41,6 +26,38 @@ public class PlanetClean : MonoBehaviour
             }
         }
         return true;
+    }
+
+    void Update()
+    {
+        TakeOverCheck();
+
+        if(TakeOverCheck() == true)
+        {
+            Dictionary<int, int> SubTeamList = new Dictionary<int, int>();
+            Collider[] AirSpace = Physics.OverlapSphere(transform.position, radius);
+            foreach (var Ship in AirSpace)
+            {
+                int SubTeamValue = Ship.GetComponent<ShipClean>().GetSubTeam();
+                if (!SubTeamList.ContainsKey(SubTeamValue))
+                {
+                    SubTeamList[SubTeamValue] = 0;
+                }
+                SubTeamList[SubTeamValue] += 1;
+            }
+
+            int SubTeamWithHighestCount = 0;
+            int HighestCount = 0;
+            foreach (int SubTeam in SubTeamList.Keys)
+            {
+                if(SubTeamList[SubTeam] > HighestCount)
+                {
+                    HighestCount = SubTeamList[SubTeam];
+                    SubTeamWithHighestCount = SubTeam;
+                }
+            }
+            Debug.Log(SubTeamWithHighestCount);
+        }
     }
 
     public void HighlightRing()

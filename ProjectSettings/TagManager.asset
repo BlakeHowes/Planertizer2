@@ -10,6 +10,7 @@ TagManager:
   - ENEMYAI
   - SPACE
   - OBJECT
+  - SHIP
   layers:
   - Default
   - TransparentFX

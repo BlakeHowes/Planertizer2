@@ -52,11 +52,7 @@ public class ShipClean : MonoBehaviour
         UniqueSpin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         ShipMesh.material.color = GetTeamColour();
 
-        //Set Target parent to spawn
-        Collider[] StartPlanet = Physics.OverlapSphere(transform.position, radius);
-        Target.transform.position = StartPlanet[0].transform.position;
-        Target.transform.SetParent(StartPlanet[0].transform);
-
+        ParentToSpawnPlanet();
     }
 
     private void FixedUpdate()
@@ -73,13 +69,16 @@ public class ShipClean : MonoBehaviour
         float nearestDistance = Mathf.Infinity;
         foreach (var Ship in OtherShips)
         {
-            var sqrdistance = (transform.position - Ship.transform.position).sqrMagnitude;
-            if (sqrdistance < nearestDistance)
+            if(Ship.gameObject.tag == "SHIP")
             {
-                if (Ship.GetComponent<ShipClean>().GetTeam() != Team)
+                var sqrdistance = (transform.position - Ship.transform.position).sqrMagnitude;
+                if (sqrdistance < nearestDistance)
                 {
-                    nearestDistance = sqrdistance;
-                    nearestEnemy = Ship.gameObject;
+                    if (Ship.GetComponent<ShipClean>().GetTeam() != Team)
+                    {
+                        nearestDistance = sqrdistance;
+                        nearestEnemy = Ship.gameObject;
+                    }
                 }
             }
         }
@@ -135,6 +134,19 @@ public class ShipClean : MonoBehaviour
                     }
                     AltitudeFromPlanet = Altitude;
                 }
+            }
+        }
+    }
+
+    private void ParentToSpawnPlanet()
+    {
+        Collider[] StartPlanet = Physics.OverlapSphere(transform.position, radius);
+        foreach (Collider Planet in StartPlanet)
+        {
+            if (Planet.gameObject.tag == "PLANET")
+            {
+                Target.transform.position = Planet.transform.position;
+                Target.transform.SetParent(Planet.transform);
             }
         }
     }
